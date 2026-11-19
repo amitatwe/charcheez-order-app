@@ -342,6 +342,48 @@ async function submitOrder(event) {
     date: new Date().toLocaleString("fa-IR")
   };
 
+  
+async function submitOrder(event) {
+  event.preventDefault();
+
+  if (!Object.keys(cart).length) {
+    showToast("اول یک محصول به سبد خرید اضافه کن.");
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const note = document.getElementById("note").value.trim();
+
+  if (!name || !phone || !address) {
+    showToast("لطفاً اطلاعات تحویل را کامل کن.");
+    return;
+  }
+
+  let total = 0;
+
+  const items = Object.values(cart).map(p => {
+    total += p.price * p.qty;
+
+    return {
+      name: p.name,
+      price: p.price,
+      quantity: p.qty,
+      subtotal: p.price * p.qty
+    };
+  });
+
+  const order = {
+    name,
+    phone,
+    address,
+    note: note || "ندارد",
+    items,
+    total,
+    date: new Date().toLocaleString("fa-IR")
+  };
+
   try {
     showToast("در حال ارسال سفارش...");
 
@@ -373,12 +415,11 @@ async function submitOrder(event) {
     document.getElementById("note").value = "";
 
   } catch (error) {
-  console.error(error);
-  showToast("خطا: " + error.message);
-}
+    console.error(error);
+    showToast("خطا: " + error.message);
   }
-  
-renderCategories();renderMenu();renderCart();
+}
+;
 </script>
   <script>
 if ("serviceWorker" in navigator) {

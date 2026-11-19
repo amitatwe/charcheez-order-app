@@ -119,7 +119,7 @@ footer{background:#171717;color:#ddd;margin-top:55px;padding:34px 22px 20px}
       <div class="brand-mark">🍕</div>
       <div><div class="brand-name">چار<span>چیز</span></div><small>FAST FOOD CHARCHIZ</small></div>
     </a>
-    <div class="nav-links"><a href="#menu-section">منوی غذا</a><a href="#why-us">چرا چارچیز؟</a><a href="#checkout">ثبت سفارش</a></div>
+    <div class="nav-links"><a href="#menu-section">منوی غذا</a><a href="#why-us">چرا چارچیز؟</a><a href="#checkout">ثبت سفارش</a><a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer">📸 اینستاگرام</a></div>
     <button class="cart-nav" onclick="document.getElementById('checkout').scrollIntoView({behavior:'smooth'})">🛒 سبد خرید <span class="cart-count" id="cart-count">۰</span></button>
   </nav>
 </header>
@@ -171,7 +171,7 @@ footer{background:#171717;color:#ddd;margin-top:55px;padding:34px 22px 20px}
 </main>
 
 <footer>
-  <div class="footer-inner"><div><div class="footer-brand">چار<span>چیز</span> 🍕</div><p>چارچیز؛ همیشه خوشمزه ❤️</p></div><p>FAST FOOD CHARCHIZ</p></div>
+  <div class="footer-inner"><div><div class="footer-brand">چار<span>چیز</span> 🍕</div><p>چارچیز؛ همیشه خوشمزه ❤️</p><p><a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer" style="color:#ff817a;font-weight:800">📸 اینستاگرام: @4__chees</a></p></div><p>FAST FOOD CHARCHIZ</p></div>
   <div class="footer-bottom">© چارچیز — سفارش آنلاین</div>
 </footer>
 <div class="toast" id="toast"></div>
@@ -192,11 +192,50 @@ const products=[
 ]}
 ];
 const sizes=["کوچک","متوسط","بزرگ","نیم‌متری"];
-const categoryImages={
-"🍔 برگرها":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
-"🥪 ساندویچ‌ها":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=80",
-"🍗 سوخاری‌ها":"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80",
-"🍕 پیتزاها":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
+const productImages = {
+  "بمب چارچیز": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
+  "سوخاری برگر": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=82",
+  "سوخاری": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=82",
+  "غول برگر": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=82",
+  "چیزبرگر": "https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=82",
+  "چیزبرگر با قارچ": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=82",
+  "چیکن برگر": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=82",
+  "آژان": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=82",
+  "ماشروم برگر": "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82",
+  "رویال برگر": "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82",
+  "همبرگر دستساز": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
+  "هندی برگر": "https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=82",
+  "دوبل برگر": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=82",
+  "دوبل برگر با قارچ": "https://images.unsplash.com/photo-1571091718767-18b5b1457ADD?auto=format&fit=crop&w=800&q=82",
+  "پپرونی برگر با قارچ": "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82",
+  "همبرگر": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
+  "ژامبون قارچ و پنیر تنوری": "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
+  "بچ": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=82",
+  "هات داگ قارچ و پنیر": "https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=800&q=82",
+  "کوکتل قارچ و پنیر": "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
+  "مرغ قارچ و پنیر": "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=82",
+  "مرغ و قارچ": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82",
+  "بندری": "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
+  "بندری قارچ و پنیر": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=82",
+  "فلافل": "https://images.unsplash.com/photo-1593001874117-c99c0c2c3e88?auto=format&fit=crop&w=800&q=82",
+  "فلافل قارچ و پنیر": "https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=800&q=82",
+  "جگر چرخ‌کرده": "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
+  "کالباس": "https://images.unsplash.com/photo-1554433607-66b5efe9d304?auto=format&fit=crop&w=800&q=82",
+  "ژامبون سرد": "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
+  "سوسیس سیب زمینی": "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=82",
+  "ماکارونی": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=82",
+  "مغز فیله سوخاری ۵۰۰ گرم": "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=800&q=82",
+  "سیب زمینی سرخ کرده": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82",
+  "مخصوص سرآشپز چارچیز": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=82",
+  "مخصوص": "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=82",
+  "رست بیفو": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=82",
+  "پپرونی رست بیفو": "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=82",
+  "پپرونی مرغ و قارچ": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=82",
+  "کلاسیک": "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=82",
+  "بیفا": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=82",
+  "میکس": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=82",
+  "مخلوط": "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=82",
+  "پپرونی": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82"
 };
 let cart={};
 let activeCategory="همه";
@@ -225,7 +264,7 @@ function renderMenu(){
    const priceText=isSizes?"از "+money(Math.min(...price)):typeof price==="number"?money(price):price;
    const sizeSelect=isSizes?`<select class="size-select" id="size-${g}-${i}" aria-label="انتخاب اندازه ${p[0]}">${sizes.map((s,j)=>`<option value="${j}">${s}</option>`).join("")}</select>`:"";
    html+=`<article class="product-card">
-    <div class="product-photo"><img src="${categoryImages[group.category]}" alt="${p[0]}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#eee'"><span class="photo-tag">${group.category.split(" ")[0]} چارچیز</span></div>
+    <div class="product-photo"><img src="${productImages[p[0]]}" alt="${p[0]}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#eee'"><span class="photo-tag">${group.category.split(" ")[0]} چارچیز</span></div>
     <div class="product-info"><h4>${p[0]}</h4><div class="product-meta">تهیه‌شده با عشق در چارچیز</div><div class="product-price">${priceText}</div>
     <div class="product-actions">${sizeSelect}<button class="add-btn" ${unavailable?"disabled":""} onclick="add(${g},${i})">${unavailable?"به‌زودی":"+ افزودن"}</button></div></div>
    </article>`;

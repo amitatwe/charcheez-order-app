@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  <link rel="manifest" href="/charcheez-order-app/manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#171717">
@@ -316,5 +317,14 @@ async function submitOrder(event){
 }
 renderCategories();renderMenu();renderCart();
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register(
+      "/charcheez-order-app/service-worker.js"
+    ).catch(error => console.error(error));
+  });
+}
+  </script>
 </body>
 </html>

@@ -300,9 +300,9 @@ function renderCart(){
 
  
 async function submitOrder(event) {
-  event.preventDefault();event.preventDefault();
+  event.preventDefault();
 
-if (!Object.keys(cart).length) {
+  if (!Object.keys(cart).length) {
 
   if (!Object.keys(cart).length) {
     showToast("اول یک محصول به سبد خرید اضافه کن.");

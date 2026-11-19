@@ -1,0 +1,12 @@
+{
+  "name": "چارچیز | سفارش آنلاین",
+  "short_name": "چارچیز",
+  "description": "سفارش آنلاین غذا از چارچیز",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "/charcheez-order-app/",
+  "scope": "/charcheez-order-app/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#b5121b"
+}

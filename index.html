@@ -371,9 +371,9 @@ async function submitOrder(event) {
     document.getElementById("note").value = "";
 
   } catch (error) {
-    console.error(error);
-    showToast("ارسال سفارش ناموفق بود. دوباره تلاش کن.");
-  }
+  console.error(error);
+  showToast("خطا: " + error.message);
+}
   }
   
 renderCategories();renderMenu();renderCart();

@@ -3,25 +3,32 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>چارچیز | سفارش آنلاین</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f5f5;color:#222;font-family:tahoma,Arial}
-header{background:#171717;color:white;text-align:center;padding:30px 15px}
-header h1{color:#ef2929;font-size:32px;margin:0}
+body{margin:0;background:#f4f4f4;color:#222;font-family:tahoma,Arial}
+header{background:#171717;color:white;text-align:center;padding:28px 12px}
+header h1{color:#ed302b;font-size:34px;margin:5px}
 header p{color:#ddd}
-main{max-width:750px;margin:25px auto;padding:15px}
-h2{margin-bottom:20px}
-.item,.cart{background:white;border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 3px 12px #ddd}
-.emoji{text-align:center;font-size:65px}
-.price{color:#e32626;font-size:20px;font-weight:bold}
-button{border:0;border-radius:10px;background:#df2626;color:white;padding:14px 20px;font-size:16px;cursor:pointer}
+.container{max-width:850px;margin:auto;padding:18px}
+h2{font-size:21px;margin:30px 0 15px}
+.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.item{background:white;border-radius:17px;padding:16px;text-align:center;box-shadow:0 3px 12px #0001}
+.emoji{font-size:43px;margin:8px}
+.item h3{font-size:16px;min-height:38px}
+.price{color:#d62828;font-weight:bold;margin:12px}
+button{border:0;border-radius:10px;background:#d62828;color:white;padding:12px 17px;font-size:15px;cursor:pointer}
 button:active{opacity:.7}
-.item button{width:100%}
-input,textarea{width:100%;padding:14px;margin:8px 0;border:1px solid #ccc;border-radius:9px;font:inherit}
-.total{font-size:20px;font-weight:bold;color:#d22}
-footer{text-align:center;background:#171717;color:white;padding:20px}
+.cart{background:white;border-radius:15px;padding:17px;margin-top:30px}
+.cartrow{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #ddd;padding:12px 0}
+.qty{display:flex;align-items:center;gap:9px}
+.qty button{padding:5px 11px}
+.total{font-size:20px;font-weight:bold;color:#d62828;margin:20px 0}
+input,textarea,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ccc;border-radius:9px;font-family:inherit}
+.orderbtn{width:100%;margin-top:12px}
+footer{text-align:center;padding:25px;background:#171717;color:white;margin-top:30px}
+@media(max-width:400px){.menu{gap:9px}.item{padding:10px}.item h3{font-size:14px}}
 </style>
 </head>
 <body>
@@ -31,83 +38,193 @@ footer{text-align:center;background:#171717;color:white;padding:20px}
 <p>طعم خوشمزه، سفارش آسان!</p>
 </header>
 
-<main>
+<div class="container">
 <h2>🍽️ منوی غذا</h2>
-
-<div class="item">
-<div class="emoji">🍗</div>
-<h3>مغز فیله سوخاری</h3>
-<p>۵۰۰ گرم</p>
-<p class="price">۶۵۰٬۰۰۰ تومان</p>
-<button onclick="addFood()">افزودن به سبد خرید</button>
-</div>
+<div id="menu"></div>
 
 <div class="cart">
 <h2>🛒 سبد خرید</h2>
-<div id="cart">سبد خرید خالی است.</div>
-<p class="total" id="total">مبلغ کل: ۰ تومان</p>
-<button onclick="checkout()">ثبت سفارش</button>
-</div>
+<div id="cart">سبد خرید شما خالی است.</div>
+<div class="total" id="total">مبلغ کل: ۰ تومان</div>
 
-<div class="cart">
-<h2>📍 اطلاعات مشتری</h2>
-<input id="name" placeholder="نام و نام خانوادگی">
-<input id="phone" placeholder="شماره تماس" inputmode="tel">
-<textarea id="address" placeholder="آدرس کامل محل تحویل"></textarea>
+<h2>📍 اطلاعات سفارش</h2>
+<input id="name" placeholder="نام مشتری">
+<input id="phone" placeholder="شماره تماس" type="tel">
+<textarea id="address" placeholder="آدرس دقیق تحویل سفارش"></textarea>
+<textarea id="note" placeholder="توضیحات سفارش (اختیاری)"></textarea>
+<button class="orderbtn" onclick="submitOrder()">ثبت و آماده‌سازی سفارش</button>
 </div>
-</main>
+</div>
 
 <footer>
-چارچیز | سفارش آنلاین غذا
+<strong>FASTFOOD CHARCHIZ</strong>
+<p>چارچیز؛ همیشه خوشمزه ❤️</p>
 </footer>
 
 <script>
-let count=0;
-const price=650000;
+const products=[
+{category:"🍔 برگرها",items:[
+["بمب چارچیز",400000,"🍔"],
+["سوخاری برگر",290000,"🍔"],
+["سوخاری",250000,"🍗"],
+["غول برگر",300000,"🍔"],
+["چیزبرگر",200000,"🍔"],
+["چیزبرگر با قارچ",220000,"🍔"],
+["چیکن برگر",300000,"🍔"],
+["آژان",300000,"🍔"],
+["ماشروم برگر",250000,"🍔"],
+["رویال برگر",280000,"🍔"],
+["همبرگر دستساز",280000,"🍔"],
+["هندی برگر",250000,"🍔"],
+["دوبل برگر",270000,"🍔"],
+["دوبل برگر با قارچ",300000,"🍔"],
+["پپرونی برگر با قارچ",270000,"🍔"],
+["همبرگر",140000,"🍔"]
+]},
+{category:"🥪 ساندویچ‌ها",items:[
+["ژامبون قارچ و پنیر تنوری",240000,"🥪"],
+["بچ",240000,"🥪"],
+["هات داگ قارچ و پنیر",240000,"🌭"],
+["کوکتل قارچ و پنیر",240000,"🌭"],
+["مرغ قارچ و پنیر",270000,"🥪"],
+["مرغ و قارچ",230000,"🥪"],
+["بندری",150000,"🌭"],
+["بندری قارچ و پنیر",200000,"🌭"],
+["فلافل",140000,"🥙"],
+["فلافل قارچ و پنیر",180000,"🥙"],
+["جگر چرخ‌کرده",220000,"🥪"],
+["کالباس",140000,"🥪"],
+["ژامبون سرد",200000,"🥪"],
+["سوسیس سیب زمینی",180000,"🌭"],
+["ماکارونی",140000,"🍝"]
+]},
+{category:"🍗 سوخاری‌ها",items:[
+["مغز فیله سوخاری ۵۰۰ گرم",650000,"🍗"],
+["سیب زمینی سرخ کرده", "به‌زودی","🍟"]
+]},
+{category:"🍕 پیتزاها",items:[
+["مخصوص سرآشپز چارچیز",[500000,560000,630000,890000],"🍕"],
+["مخصوص",[380000,490000,540000,780000],"🍕"],
+["سوخاری",[450000,500000,600000,830000],"🍕"],
+["رست بیفو",[480000,400000,620000,880000],"🍕"],
+["پپرونی رست بیفو",[480000,560000,620000,850000],"🍕"],
+["مرغ و قارچ",[420000,540000,590000,790000],"🍕"],
+["پپرونی مرغ و قارچ",[420000,540000,590000,790000],"🍕"],
+["کلاسیک",[380000,490000,540000,780000],"🍕"],
+["بیفا",[420000,540000,590000,790000],"🍕"],
+["میکس",[450000,540000,610000,850000],"🍕"],
+["مخلوط",[350000,440000,490000,670000],"🍕"],
+["پپرونی",[390000,480000,540000,690000],"🍕"]
+]}
+];
 
-function addFood(){
-count++;
-showCart();
+const sizes=["کوچک","متوسط","بزرگ","نیم‌متری"];
+let cart={};
+
+function money(n){
+return Number(n).toLocaleString("fa-IR")+" تومان";
 }
 
-function removeFood(){
-count=Math.max(0,count-1);
-showCart();
-}
-
-function showCart(){
-let cart=document.getElementById("cart");
-if(count===0){
-cart.innerHTML="سبد خرید خالی است.";
+function renderMenu(){
+let html="";
+products.forEach(group=>{
+html+=`<h2>${group.category}</h2><div class="menu">`;
+group.items.forEach((p,i)=>{
+let price=p[1];
+let size="";
+let priceText="";
+if(Array.isArray(price)){
+size=`<select id="size-${products.indexOf(group)}-${i}">
+${sizes.map((s,j)=>`<option value="${j}">${s}</option>`).join("")}
+</select>`;
+priceText="انتخاب اندازه";
 }else{
-cart.innerHTML=
-"مغز فیله سوخاری ۵۰۰ گرم × "+count+
-"<br><br><button onclick='removeFood()'>حذف یک عدد</button>";
+priceText=typeof price==="number"?money(price):price;
 }
-document.getElementById("total").innerText=
-"مبلغ کل: "+(count*price).toLocaleString("fa-IR")+" تومان";
+html+=`<div class="item">
+<div class="emoji">${p[2]}</div>
+<h3>${p[0]}</h3>
+${size}
+<div class="price">${priceText}</div>
+<button onclick="add(${products.indexOf(group)},${i})">افزودن به سبد</button>
+</div>`;
+});
+html+="</div>";
+});
+document.getElementById("menu").innerHTML=html;
 }
 
-function checkout(){
+function add(g,i){
+let p=products[g].items[i];
+let sizeIndex=p[1] instanceof Array?
+Number(document.getElementById(`size-${g}-${i}`).value):-1;
+let price=sizeIndex>=0?p[1][sizeIndex]:p[1];
+if(typeof price!=="number"){
+alert("قیمت این محصول هنوز مشخص نشده است.");
+return;
+}
+let key=g+"-"+i+"-"+sizeIndex;
+if(!cart[key])cart[key]={name:p[0]+(sizeIndex>=0?" - "+sizes[sizeIndex]:""),price,qty:0};
+cart[key].qty++;
+renderCart();
+}
+
+function change(key,amount){
+cart[key].qty+=amount;
+if(cart[key].qty<=0)delete cart[key];
+renderCart();
+}
+
+function renderCart(){
+let keys=Object.keys(cart);
+let html="";
+let total=0;
+keys.forEach(k=>{
+let p=cart[k];
+total+=p.price*p.qty;
+html+=`<div class="cartrow">
+<div>${p.name}<br>${money(p.price)}</div>
+<div class="qty">
+<button onclick="change('${k}',-1)">−</button>
+${p.qty}
+<button onclick="change('${k}',1)">+</button>
+</div>
+</div>`;
+});
+document.getElementById("cart").innerHTML=html||"سبد خرید شما خالی است.";
+document.getElementById("total").innerText="مبلغ کل: "+money(total);
+}
+
+function submitOrder(){
+if(!Object.keys(cart).length){
+alert("سبد خرید خالی است.");
+return;
+}
 let name=document.getElementById("name").value.trim();
 let phone=document.getElementById("phone").value.trim();
 let address=document.getElementById("address").value.trim();
-
-if(count===0){alert("سبد خرید خالی است");return;}
 if(!name||!phone||!address){
-alert("لطفاً اطلاعات مشتری را کامل کنید");
+alert("لطفاً نام، شماره تماس و آدرس را وارد کنید.");
 return;
 }
-
-alert(
-"سفارش شما آماده ثبت است.\n"+
-"نام: "+name+"\n"+
-"تلفن: "+phone+"\n"+
-"آدرس: "+address+"\n"+
-"مغز فیله سوخاری: "+count+" عدد\n"+
-"مبلغ: "+(count*price).toLocaleString("fa-IR")+" تومان"
-);
+let total=0;
+let textOrder="سفارش جدید چارچیز\n\n";
+textOrder+="نام: "+name+"\nشماره: "+phone+"\nآدرس: "+address+"\n\n";
+Object.values(cart).forEach(p=>{
+textOrder+=p.name+" × "+p.qty+" = "+money(p.price*p.qty)+"\n";
+total+=p.price*p.qty;
+});
+textOrder+="\nمبلغ کل: "+money(total);
+textOrder+="\nتوضیحات: "+document.getElementById("note").value;
+if(navigator.clipboard){
+navigator.clipboard.writeText(textOrder).then(()=>{
+alert("خلاصه سفارش کپی شد. می‌توانی آن را برای رستوران ارسال کنی.");
+}).catch(()=>alert(textOrder));
+}else{
+alert(textOrder);
 }
+}
+renderMenu();
 </script>
 </body>
 </html>

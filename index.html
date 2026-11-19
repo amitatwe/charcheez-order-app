@@ -301,6 +301,7 @@ function renderCart(){
  
 async function submitOrder(event) {
   event.preventDefault();
+  alert("تابع ثبت سفارش اجرا شد");
 
   if (!Object.keys(cart).length) {
     showToast("اول یک محصول به سبد خرید اضافه کن.");

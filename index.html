@@ -298,23 +298,84 @@ function renderCart(){
  document.getElementById("cart-count").textContent=count.toLocaleString("fa-IR");
 }
 async function submitOrder(event){
- event.preventDefault();
- if(!Object.keys(cart).length){showToast("اول یک محصول به سبد خرید اضافه کن.");return;}
- const name=document.getElementById("name").value.trim();
- const phone=document.getElementById("phone").value.trim();
- const address=document.getElementById("address").value.trim();
- const note=document.getElementById("note").value.trim();
- if(!name||!phone||!address){showToast("لطفاً اطلاعات تحویل را کامل کن.");return;}
- let total=0;let orderText="سفارش جدید چارچیز\n\nنام: "+name+"\nشماره: "+phone+"\nآدرس: "+address+"\n\n";
- Object.values(cart).forEach(p=>{orderText+=p.name+" × "+p.qty+" = "+money(p.price*p.qty)+"\n";total+=p.price*p.qty;});
- orderText+="\nمبلغ کل: "+money(total)+"\nتوضیحات: "+(note||"ندارد");
- try{
-  await navigator.clipboard.writeText(orderText);
-  showToast("خلاصه سفارش کپی شد؛ آماده ارسال است.");
- }catch(e){
-  window.prompt("خلاصه سفارش را کپی کن:",orderText);
- }
-}
+ 
+async function submitOrder(event) {
+  event.preventDefault();
+
+  if (!Object.keys(cart).length) {
+    showToast("اول یک محصول به سبد خرید اضافه کن.");
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const note = document.getElementById("note").value.trim();
+
+  if (!name || !phone || !address) {
+    showToast("لطفاً اطلاعات تحویل را کامل کن.");
+    return;
+  }
+
+  let total = 0;
+
+  const items = Object.values(cart).map(p => {
+    total += p.price * p.qty;
+
+    return {
+      name: p.name,
+      price: p.price,
+      quantity: p.qty,
+      subtotal: p.price * p.qty
+    };
+  });
+
+  const order = {
+    name,
+    phone,
+    address,
+    note: note || "ندارد",
+    items,
+    total,
+    date: new Date().toLocaleString("fa-IR")
+  };
+
+  try {
+    showToast("در حال ارسال سفارش...");
+
+    const response = await fetch(
+      "https://charcheez-bot.asdzadhamyr077.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(order)
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || "ارسال سفارش ناموفق بود");
+    }
+
+    showToast("سفارش با موفقیت به چارچیز ارسال شد!");
+
+    cart = {};
+    renderCart();
+
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("address").value = "";
+    document.getElementById("note").value = "";
+
+  } catch (error) {
+    console.error(error);
+    showToast("ارسال سفارش ناموفق بود. دوباره تلاش کن.");
+  }
+  }
+  
 renderCategories();renderMenu();renderCart();
 </script>
   <script>

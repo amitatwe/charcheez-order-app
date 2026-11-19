@@ -1,7 +1,11 @@
+
 const CACHE_NAME = "charcheez-v1";
+
 const FILES_TO_CACHE = [
   "/charcheez-order-app/",
-  "/charcheez-order-app/manifest.json"
+  "/charcheez-order-app/index.html",
+  "/charcheez-order-app/icon-192.png",
+  "/charcheez-order-app/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
@@ -30,8 +34,8 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request).catch(() =>
-      caches.match(event.request)
-    )
+    caches.match(event.request).then(cachedResponse => {
+      return cachedResponse || fetch(event.request);
+    })
   );
 });

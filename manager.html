@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171717">
+<meta name="description" content="اپلیکیشن مدیریت چارچیز">
+<title>چارچیز | مدیریت</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+:root{--red:#e3322b;--dark:#171717;--cream:#f7f6f3;--line:#eceae6;--muted:#777}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--dark);font-family:Vazirmatn,Tahoma,sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.top{background:#111;color:white;padding:14px 18px;text-align:center;font-weight:900;font-size:19px}
+.top span{color:#ff625b}.wrap{width:min(480px,calc(100% - 28px));margin:34px auto}
+.card{background:white;border:1px solid var(--line);border-radius:22px;padding:23px;box-shadow:0 12px 35px #00000008}
+.logo{width:58px;height:58px;border-radius:18px;background:var(--dark);display:grid;place-items:center;color:white;font-size:30px;margin:0 auto 15px}
+h1{text-align:center;font-size:23px;margin:0 0 7px}.sub{text-align:center;color:#777;font-size:12px;line-height:2;margin:0 0 22px}
+.step{display:none}.step.active{display:block}.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:7px}
+.field input{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fcfcfb;outline:none;font-size:16px;direction:ltr;text-align:left}
+.field input:focus{border-color:#e5aaa7}.btn{width:100%;border:0;border-radius:12px;padding:14px;background:var(--red);color:white;font-weight:900;margin-top:8px}
+.btn:disabled{opacity:.55;cursor:wait}.secondary{background:#f2f1ee;color:#333}
+.hint{font-size:11px;color:#888;line-height:2;margin-top:14px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#171717;color:white;padding:12px 17px;border-radius:11px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:5}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.dashboard{display:none}.dashboard.active{display:block}.welcome{background:#f7f6f3;border-radius:13px;padding:15px;margin:16px 0;font-size:13px;line-height:2}
+.notice{border:1px dashed #ddd;border-radius:13px;padding:16px;color:#666;font-size:12px;line-height:2}
+.small{font-size:10px;color:#999;text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="top">چار<span>چیز</span> | مدیریت</div>
+<main class="wrap">
+  <section class="card" id="login-card">
+    <div class="logo">🍕</div>
+    <h1>ورود مدیر چارچیز</h1>
+    <p class="sub">شماره موبایل خودت را وارد کن تا درخواست کد ورود برای مدیر اصلی ارسال شود.</p>
+    <div class="step active" id="step-phone">
+      <div class="field">
+        <label for="phone">شماره موبایل</label>
+        <input id="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="13" placeholder="09123456789">
+      </div>
+      <button class="btn" id="request-btn" type="button">درخواست کد ورود</button>
+    </div>
+    <div class="step" id="step-code">
+      <div class="field">
+        <label for="code">کد شش‌رقمی</label>
+        <input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="کدی که مدیر برایت فرستاده">
+      </div>
+      <button class="btn" id="verify-btn" type="button">تأیید کد و ورود</button>
+      <button class="btn secondary" id="change-phone" type="button">تغییر شماره</button>
+      <p class="hint">کد فقط ۵ دقیقه اعتبار دارد. اگر مدیر اصلی کد را برایت نفرستاده، درخواست ورود را ادامه نده.</p>
+    </div>
+    <p class="small">چارچیز • اپلیکیشن مدیریت</p>
+  </section>
+
+  <section class="card dashboard" id="dashboard">
+    <div class="logo">🍕</div>
+    <h1>ورود موفق بود</h1>
+    <div class="welcome" id="welcome"></div>
+    <div class="notice">
+      حساب مدیریت فعال است. بخش‌های مدیریت محصولات، قیمت‌ها، موجودی و سفارش‌ها در مرحله بعد به سرور متصل می‌شوند.
+      در حال حاضر این نسخه برای آزمایش ورود امن مدیر است.
+    </div>
+    <button class="btn secondary" id="logout-btn" type="button">خروج از حساب مدیریت</button>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+const API="https://charcheez-bot.asdzadhamyr077.workers.dev";
+const $=id=>document.getElementById(id);
+let pendingPhone="";
+let managerToken=localStorage.getItem("charcheez_manager_session")||"";
+function toast(message){const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),3500)}
+function normalizePhone(value){let p=String(value||"").replace(/\D/g,"");if(p.startsWith("98")&&p.length===12)p="0"+p.slice(2);if(p.length===10&&p.startsWith("9"))p="0"+p;return p}
+async function api(path,data={},method="POST"){
+  const headers={"Content-Type":"application/json"};
+  if(managerToken)headers.Authorization="Bearer "+managerToken;
+  const response=await fetch(API+path,{method,headers,body:method==="GET"?undefined:JSON.stringify(data)});
+  let result={};try{result=await response.json()}catch{}
+  if(!response.ok||result.ok!==true)throw new Error(errorText(result.error));
+  return result;
+}
+function errorText(code){
+  const messages={invalid_phone:"شماره موبایل معتبر نیست.",please_wait:"برای درخواست کد جدید کمی صبر کن.",otp_expired:"کد منقضی شده؛ دوباره درخواست بده.",wrong_code:"کد واردشده اشتباه است.",too_many_attempts:"تعداد تلاش‌ها بیش از حد مجاز است.",unauthorized:"نشست ورود معتبر نیست.",server_configuration_missing:"تنظیمات سرور کامل نیست.",server_error:"خطای سرور؛ کمی بعد دوباره تلاش کن."};
+  return messages[code]||"ارتباط با سرور برقرار نشد.";
+}
+function showDashboard(phone){
+  $("login-card").style.display="none";
+  $("dashboard").classList.add("active");
+  $("welcome").textContent="مدیر واردشده: "+phone;
+}
+function showLogin(){
+  $("login-card").style.display="block";
+  $("dashboard").classList.remove("active");
+  $("step-phone").classList.add("active");
+  $("step-code").classList.remove("active");
+}
+async function requestCode(){
+  const phone=normalizePhone($("phone").value),button=$("request-btn");
+  if(!/^09\d{9}$/.test(phone)){toast("شماره موبایل را به شکل 09123456789 وارد کن.");return}
+  button.disabled=true;button.textContent="در حال ارسال درخواست...";
+  try{
+    await api("/manager/auth/request",{phone});
+    pendingPhone=phone;
+    $("step-phone").classList.remove("active");
+    $("step-code").classList.add("active");
+    toast("درخواست کد به تلگرام مدیر اصلی ارسال شد.");
+  }catch(error){toast(error.message)}
+  finally{button.disabled=false;button.textContent="درخواست کد ورود"}
+}
+async function verifyCode(){
+  const code=$("code").value.replace(/\D/g,""),button=$("verify-btn");
+  if(!/^\d{6}$/.test(code)){toast("کد باید شش رقم باشد.");return}
+  button.disabled=true;button.textContent="در حال بررسی...";
+  try{
+    const result=await api("/manager/auth/verify",{phone:pendingPhone,code});
+    managerToken=result.token||"";
+    if(!managerToken)throw new Error("توکن ورود از سرور دریافت نشد.");
+    localStorage.setItem("charcheez_manager_session",managerToken);
+    showDashboard(result.user?.phone||pendingPhone);
+  }catch(error){toast(error.message)}
+  finally{button.disabled=false;button.textContent="تأیید کد و ورود"}
+}
+async function restore(){
+  if(!managerToken){showLogin();return}
+  try{const result=await api("/manager/auth/me",{});showDashboard(result.user?.phone||"مدیر")}
+  catch{managerToken="";localStorage.removeItem("charcheez_manager_session");showLogin()}
+}
+async function logout(){
+  try{await api("/manager/auth/logout",{})}catch{}
+  managerToken="";localStorage.removeItem("charcheez_manager_session");
+  $("phone").value="";$("code").value="";pendingPhone="";showLogin();toast("از حساب مدیریت خارج شدی.");
+}
+$("request-btn").addEventListener("click",requestCode);
+$("verify-btn").addEventListener("click",verifyCode);
+$("change-phone").addEventListener("click",()=>{$("step-code").classList.remove("active");$("step-phone").classList.add("active")});
+$("logout-btn").addEventListener("click",logout);
+restore();
+</script>
+</body>
+</html>

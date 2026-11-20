@@ -9,355 +9,157 @@
 <title>چارچیز | سفارش آنلاین</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
-:root{--red:#e3322b;--dark:#171717;--cream:#f7f6f3;--line:#eceae6;--muted:#777;--green:#17834c}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+:root{--red:#e3322b;--dark:#171717;--cream:#f7f6f3;--line:#eceae6;--muted:#777}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{margin:0;background:var(--cream);color:var(--dark);font-family:Vazirmatn,Tahoma,sans-serif}
-button,input,textarea,select{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-.top-strip{background:#111;color:#eee;text-align:center;padding:8px 12px;font-size:12px}
-.top-strip b{color:#ff665e}
+button,input,textarea,select{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit;text-decoration:none}
+.top-strip{background:#111;color:#eee;text-align:center;padding:8px 12px;font-size:12px}.top-strip b{color:#ff665e}
 header{position:sticky;top:0;z-index:20;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-mark{width:43px;height:43px;border-radius:14px;background:var(--dark);display:grid;place-items:center;color:white;font-size:23px}
-.brand-name{font-weight:900;font-size:22px;line-height:1}
-.brand-name span,.footer-brand span{color:var(--red)}
-.brand small{display:block;color:#888;font-size:10px;margin-top:5px}
-.nav-links{display:flex;gap:22px;font-size:13px;color:#555}
-.nav-links a:hover{color:var(--red)}
+.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:43px;height:43px;border-radius:14px;background:var(--dark);display:grid;place-items:center;color:white;font-size:23px}
+.brand-name{font-weight:900;font-size:22px;line-height:1}.brand-name span,.footer-brand span{color:var(--red)}.brand small{display:block;color:#888;font-size:10px;margin-top:5px}
+.nav-links{display:flex;gap:22px;font-size:13px;color:#555}.nav-links a:hover{color:var(--red)}
 .cart-nav,.primary-btn{border:0;background:var(--red);color:#fff;border-radius:13px;padding:12px 17px;font-weight:800}
-.cart-nav{display:flex;align-items:center;gap:8px}
-.cart-count{background:white;color:var(--red);border-radius:20px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px}
+.cart-nav{display:flex;align-items:center;gap:8px}.cart-count{background:white;color:var(--red);border-radius:20px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px}
 .wrap{max-width:1180px;margin:auto;padding:0 20px}
 .hero{margin:26px auto 22px;min-height:340px;border-radius:25px;overflow:hidden;position:relative;background:#171717;display:flex;align-items:center;color:white}
 .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#101010ed 0%,#101010b8 48%,#10101020 100%),url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1500&q=85') center/cover}
-.hero-content{position:relative;padding:42px 48px;max-width:620px}
-.eyebrow{display:inline-block;color:#ff817a;background:#e3322b25;border:1px solid #e3322b70;border-radius:30px;padding:7px 13px;font-size:12px;font-weight:800}
-.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.4;margin:16px 0 8px;font-weight:900}
-.hero h1 span{color:#ff5149}
-.hero p{color:#ddd;line-height:2;font-size:14px;margin:0 0 22px}
-.hero-note{display:inline-block;margin-right:12px;color:#ddd;font-size:12px}
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:34px}
-.benefit{background:white;border:1px solid var(--line);border-radius:15px;padding:14px;display:flex;align-items:center;gap:10px}
-.benefit-icon{width:38px;height:38px;border-radius:12px;background:#fff0ef;display:grid;place-items:center;font-size:19px;flex-shrink:0}
-.benefit b{display:block;font-size:13px}.benefit small{color:#888;font-size:11px}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:34px 0 16px}
-.section-head h2{font-size:23px;margin:0;font-weight:900}.section-head p{color:#888;font-size:12px;margin:5px 0 0}
+.hero-content{position:relative;padding:42px 48px;max-width:620px}.eyebrow{display:inline-block;color:#ff817a;background:#e3322b25;border:1px solid #e3322b70;border-radius:30px;padding:7px 13px;font-size:12px;font-weight:800}
+.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.4;margin:16px 0 8px;font-weight:900}.hero h1 span{color:#ff5149}.hero p{color:#ddd;line-height:2;font-size:14px;margin:0 0 22px}.hero-note{display:inline-block;margin-right:12px;color:#ddd;font-size:12px}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:34px}.benefit{background:white;border:1px solid var(--line);border-radius:15px;padding:14px;display:flex;align-items:center;gap:10px}
+.benefit-icon{width:38px;height:38px;border-radius:12px;background:#fff0ef;display:grid;place-items:center;font-size:19px;flex-shrink:0}.benefit b{display:block;font-size:13px}.benefit small{color:#888;font-size:11px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:34px 0 16px}.section-head h2{font-size:23px;margin:0;font-weight:900}.section-head p{color:#888;font-size:12px;margin:5px 0 0}
 .searchbox{width:min(330px,100%)}.searchbox input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:white;outline:none}
-.category-bar{display:flex;gap:8px;overflow:auto;padding:3px 1px 13px;scrollbar-width:thin}
-.category-chip{white-space:nowrap;border:1px solid var(--line);background:white;color:#555;border-radius:30px;padding:9px 15px;font-size:12px;font-weight:700}
-.category-chip.active{background:var(--dark);color:white;border-color:var(--dark)}
-.menu-group{margin:24px 0 32px}.group-title{display:flex;align-items:center;gap:10px;margin-bottom:14px}.group-title h3{font-size:19px;margin:0}.group-title:after{content:"";height:1px;background:var(--line);flex:1}
-.menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.product-card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:.2s}
-.product-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px #0000000c}
-.product-photo{height:155px;background:#eee;position:relative;overflow:hidden}
-.product-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.category-bar{display:flex;gap:8px;overflow:auto;padding:3px 1px 13px}.category-chip{white-space:nowrap;border:1px solid var(--line);background:white;color:#555;border-radius:30px;padding:9px 15px;font-size:12px;font-weight:700}
+.category-chip.active{background:var(--dark);color:white;border-color:var(--dark)}.menu-group{margin:24px 0 32px}.group-title{display:flex;align-items:center;gap:10px;margin-bottom:14px}.group-title h3{font-size:19px;margin:0}.group-title:after{content:"";height:1px;background:var(--line);flex:1}
+.menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.product-card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:.2s}
+.product-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px #0000000c}.product-photo{height:155px;background:#eee;position:relative;overflow:hidden}.product-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .photo-tag{position:absolute;top:10px;right:10px;background:#fff;border-radius:20px;padding:5px 9px;font-size:10px;font-weight:800}
-.product-info{padding:13px;display:flex;flex-direction:column;flex:1}
-.product-info h4{font-size:14px;margin:0 0 6px;min-height:27px}
-.product-meta{font-size:10px;color:#999;margin-bottom:8px}
-.product-price{font-size:14px;color:var(--red);font-weight:900;margin-top:auto}
-.product-actions{display:flex;gap:7px;margin-top:10px}
-.size-select{flex:1;min-width:0;padding:8px;border:1px solid var(--line);border-radius:9px;background:#fafafa;font-size:11px}
-.add-btn{border:0;background:var(--dark);color:white;border-radius:9px;padding:9px 12px;font-size:11px;font-weight:800}
-.add-btn:disabled{opacity:.45;cursor:not-allowed}
+.product-info{padding:13px;display:flex;flex-direction:column;flex:1}.product-info h4{font-size:14px;margin:0 0 6px;min-height:27px}.product-meta{font-size:10px;color:#999;margin-bottom:8px}
+.product-price{font-size:14px;color:var(--red);font-weight:900;margin-top:auto}.product-actions{display:flex;gap:7px;margin-top:10px}.size-select{flex:1;min-width:0;padding:8px;border:1px solid var(--line);border-radius:9px;background:#fafafa;font-size:11px}
+.add-btn{border:0;background:var(--dark);color:white;border-radius:9px;padding:9px 12px;font-size:11px;font-weight:800}.add-btn:disabled{opacity:.45;cursor:not-allowed}
 .empty-search{background:white;border:1px dashed #ddd;border-radius:14px;padding:26px;text-align:center;color:#888}
-.checkout-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:17px;margin:42px 0;align-items:start}
-.panel{background:white;border:1px solid var(--line);border-radius:19px;padding:20px}
-.panel h2{font-size:18px;margin:0 0 15px}
-.panel-title{display:flex;align-items:center;justify-content:space-between}
-.clear-btn{border:0;background:none;color:#999;font-size:11px}
-.cart-empty{text-align:center;color:#999;padding:24px 5px;font-size:13px}.cart-empty span{font-size:34px;display:block}
-.cart-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px solid #f0efed;padding:12px 0}
-.cart-row b{font-size:13px;display:block}.cart-row small{font-size:11px;color:#999}
-.qty{display:flex;align-items:center;gap:8px}.qty button{width:28px;height:28px;border:1px solid var(--line);background:white;border-radius:8px;font-size:17px}
-.qty strong{font-size:12px;min-width:12px;text-align:center}
-.cart-total{border-top:1px dashed #ddd;margin-top:12px;padding-top:15px;display:flex;justify-content:space-between;font-weight:900}
-.cart-total strong{color:var(--red);font-size:19px}
-.field{margin:12px 0}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}
-.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fcfcfb;font-size:13px;outline:none}
-.field input:focus,.field textarea:focus{border-color:#e5aaa7}.field textarea{min-height:78px;resize:vertical}
-.submit-btn{width:100%;margin-top:8px;padding:14px}.submit-btn:disabled{opacity:.6;cursor:wait}
+.checkout-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:17px;margin:42px 0;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:19px;padding:20px}
+.panel h2{font-size:18px;margin:0 0 15px}.panel-title{display:flex;align-items:center;justify-content:space-between}.clear-btn{border:0;background:none;color:#999;font-size:11px}
+.cart-empty{text-align:center;color:#999;padding:24px 5px;font-size:13px}.cart-empty span{font-size:34px;display:block}.cart-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px solid #f0efed;padding:12px 0}
+.cart-row b{font-size:13px;display:block}.cart-row small{font-size:11px;color:#999}.qty{display:flex;align-items:center;gap:8px}.qty button{width:28px;height:28px;border:1px solid var(--line);background:white;border-radius:8px;font-size:17px}
+.qty strong{font-size:12px;min-width:12px;text-align:center}.cart-total{border-top:1px dashed #ddd;margin-top:12px;padding-top:15px;display:flex;justify-content:space-between;font-weight:900}.cart-total strong{color:var(--red);font-size:19px}
+.field{margin:12px 0}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fcfcfb;font-size:13px;outline:none}
+.field input:focus,.field textarea:focus{border-color:#e5aaa7}.field textarea{min-height:78px;resize:vertical}.submit-btn{width:100%;margin-top:8px;padding:14px}.submit-btn:disabled{opacity:.6;cursor:wait}
 .form-hint{font-size:10px;color:#888;line-height:1.9;margin:9px 0 0}
-footer{background:#171717;color:#ddd;margin-top:50px;padding:30px 20px 18px}
-.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.footer-brand{font-size:22px;font-weight:900;color:white}.footer-inner p{font-size:12px;color:#aaa}
-.footer-bottom{max-width:1180px;margin:18px auto 0;border-top:1px solid #333;padding-top:13px;color:#777;font-size:10px}
-.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#171717;color:white;padding:12px 18px;border-radius:11px;font-size:12px;z-index:60;opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center}
-.toast.show{opacity:1;transform:translate(-50%,0)}
+footer{background:#171717;color:#ddd;margin-top:50px;padding:30px 20px 18px}.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-brand{font-size:22px;font-weight:900;color:white}.footer-inner p{font-size:12px;color:#aaa}.footer-bottom{max-width:1180px;margin:18px auto 0;border-top:1px solid #333;padding-top:13px;color:#777;font-size:10px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#171717;color:white;padding:12px 18px;border-radius:11px;font-size:12px;z-index:100;opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-backdrop{position:fixed;inset:0;background:#0009;z-index:80;display:none;align-items:center;justify-content:center;padding:16px}.modal-backdrop.show{display:flex}
+.modal{background:white;width:min(440px,100%);border-radius:20px;padding:22px;max-height:90vh;overflow:auto}.modal h2{margin:0 0 8px;font-size:20px}.modal p{font-size:12px;color:#777;line-height:1.9}
+.modal-actions{display:flex;gap:8px;margin-top:12px}.modal-actions button{flex:1}.secondary-btn{border:1px solid var(--line);background:#f7f6f3;color:#333;border-radius:12px;padding:12px;font-weight:700}
+.auth-step{display:none}.auth-step.active{display:block}.account-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;background:#f7f6f3;border-radius:10px;padding:10px;margin:10px 0}
 @media(max-width:850px){.menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.checkout-layout{grid-template-columns:1fr}.nav-links{display:none}}
 @media(max-width:560px){.wrap{padding:0 13px}.nav{padding:10px 13px}.brand-name{font-size:19px}.brand-mark{width:38px;height:38px}.cart-nav{padding:9px 10px;font-size:11px}.hero{margin-top:15px;min-height:315px;border-radius:19px}.hero:before{background:linear-gradient(0deg,#101010ed 0%,#101010a8 62%,#10101020 100%),url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80') center/cover}.hero-content{padding:25px 20px;margin-top:50px}.hero h1{font-size:31px}.hero p{font-size:12px}.hero-note{display:block;margin:12px 0 0}.benefits{gap:7px}.benefit{padding:9px 7px;gap:6px;align-items:flex-start}.benefit-icon{width:29px;height:29px;font-size:14px}.benefit b{font-size:10px}.benefit small{font-size:9px}.section-head{align-items:stretch;flex-direction:column;margin-top:27px}.section-head h2{font-size:20px}.searchbox{width:100%}.menu-grid{gap:9px}.product-photo{height:116px}.product-info{padding:9px}.product-info h4{font-size:12px;line-height:1.7;min-height:40px}.product-meta{font-size:9px}.product-price{font-size:12px}.product-actions{flex-wrap:wrap}.size-select,.add-btn{width:100%;flex-basis:100%}.panel{padding:16px}.footer-inner{align-items:flex-start;flex-direction:column;gap:5px}}
 </style>
 </head>
 <body>
 <div class="top-strip">سفارش تازه و خوشمزه از <b>چارچیز</b>؛ انتخاب کن، سفارش بده، لذت ببر ❤️</div>
-<header>
-  <nav class="nav">
-    <a class="brand" href="#">
-      <div class="brand-mark">🍕</div>
-      <div><div class="brand-name">چار<span>چیز</span></div><small>FAST FOOD CHARCHIZ</small></div>
-    </a>
-    <div class="nav-links">
-      <a href="#menu-section">منوی غذا</a><a href="#why-us">چرا چارچیز؟</a><a href="#checkout">ثبت سفارش</a>
-      <a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer">اینستاگرام</a>
-    </div>
-    <button class="cart-nav" type="button" onclick="document.getElementById('checkout').scrollIntoView({behavior:'smooth'})">🛒 سبد خرید <span class="cart-count" id="cart-count">۰</span></button>
-  </nav>
-</header>
+<header><nav class="nav">
+<a class="brand" href="#"><div class="brand-mark">🍕</div><div><div class="brand-name">چار<span>چیز</span></div><small>FAST FOOD CHARCHIZ</small></div></a>
+<div class="nav-links"><a href="#menu-section">منوی غذا</a><a href="#why-us">چرا چارچیز؟</a><a href="#checkout">ثبت سفارش</a><a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer">اینستاگرام</a></div>
+<button class="cart-nav" type="button" onclick="document.getElementById('checkout').scrollIntoView({behavior:'smooth'})">🛒 سبد خرید <span class="cart-count" id="cart-count">۰</span></button>
+</nav></header>
 <main class="wrap">
-  <section class="hero">
-    <div class="hero-content">
-      <span class="eyebrow">🔥 تازه، خوشمزه، مخصوص تو</span>
-      <h1>یه انتخاب خوشمزه،<br><span>یه حال خوب واقعی!</span></h1>
-      <p>از برگرهای جذاب تا پیتزاهای پرملات و سوخاری‌های ترد؛ غذای مورد علاقه‌ات رو از چارچیز انتخاب کن.</p>
-      <a class="primary-btn" href="#menu-section">دیدن منوی غذا ←</a>
-      <span class="hero-note">❤️ چارچیز؛ همیشه خوشمزه</span>
-    </div>
-  </section>
-  <section class="benefits" id="why-us">
-    <div class="benefit"><div class="benefit-icon">🍗</div><div><b>طعم دوست‌داشتنی</b><small>برای لحظه‌های خوشمزه</small></div></div>
-    <div class="benefit"><div class="benefit-icon">🛍️</div><div><b>سفارش راحت</b><small>انتخاب و ثبت سفارش آسان</small></div></div>
-    <div class="benefit"><div class="benefit-icon">❤️</div><div><b>با عشق آماده می‌شه</b><small>از چارچیز برای شما</small></div></div>
-  </section>
-  <section id="menu-section">
-    <div class="section-head">
-      <div><h2>منوی خوشمزه چارچیز</h2><p>غذای مورد علاقه‌ات رو پیدا کن و به سبد خرید اضافه کن.</p></div>
-      <div class="searchbox"><input id="search" type="search" placeholder="جست‌وجوی غذا..." oninput="renderMenu()"></div>
-    </div>
-    <div class="category-bar" id="category-bar"></div>
-    <div id="menu"></div>
-  </section>
-  <section class="checkout-layout" id="checkout">
-    <div class="panel">
-      <div class="panel-title"><h2>🛒 سبد خرید شما</h2><button class="clear-btn" type="button" onclick="clearCart()">پاک کردن سبد</button></div>
-      <div id="cart"><div class="cart-empty"><span>🛍️</span>سبد خریدت هنوز خالیه.</div></div>
-      <div class="cart-total"><span>مبلغ کل</span><strong id="total">۰ تومان</strong></div>
-    </div>
-    <div class="panel">
-      <h2>📍 اطلاعات تحویل سفارش</h2>
-      <form id="order-form" onsubmit="submitOrder(event)">
-        <div class="field"><label for="name">نام و نام خانوادگی</label><input id="name" autocomplete="name" placeholder="نام شما" required></div>
-        <div class="field"><label for="phone">شماره تماس</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="شماره موبایل" required></div>
-        <div class="field"><label for="address">آدرس دقیق</label><textarea id="address" autocomplete="street-address" placeholder="آدرس و نشانی تحویل سفارش..." required></textarea></div>
-        <div class="field"><label for="note">توضیحات سفارش (اختیاری)</label><textarea id="note" placeholder="مثلاً سس جداگانه باشد..."></textarea></div>
-        <button class="primary-btn submit-btn" id="submit-btn" type="submit">ارسال سفارش به چارچیز</button>
-        <p class="form-hint">پس از ثبت، سفارش شما مستقیماً برای چارچیز ارسال می‌شود.</p>
-      </form>
-    </div>
-  </section>
+<section class="hero"><div class="hero-content"><span class="eyebrow">🔥 تازه، خوشمزه، مخصوص تو</span><h1>یه انتخاب خوشمزه،<br><span>یه حال خوب واقعی!</span></h1><p>از برگرهای جذاب تا پیتزاهای پرملات و سوخاری‌های ترد؛ غذای مورد علاقه‌ات رو از چارچیز انتخاب کن.</p><a class="primary-btn" href="#menu-section">دیدن منوی غذا ←</a><span class="hero-note">❤️ چارچیز؛ همیشه خوشمزه</span></div></section>
+<section class="benefits" id="why-us">
+<div class="benefit"><div class="benefit-icon">🍗</div><div><b>طعم دوست‌داشتنی</b><small>برای لحظه‌های خوشمزه</small></div></div>
+<div class="benefit"><div class="benefit-icon">🛍️</div><div><b>سفارش راحت</b><small>انتخاب و ثبت سفارش آسان</small></div></div>
+<div class="benefit"><div class="benefit-icon">❤️</div><div><b>با عشق آماده می‌شه</b><small>از چارچیز برای شما</small></div></div>
+</section>
+<section id="menu-section"><div class="section-head"><div><h2>منوی خوشمزه چارچیز</h2><p>غذای مورد علاقه‌ات رو پیدا کن و به سبد خرید اضافه کن.</p></div><div class="searchbox"><input id="search" type="search" placeholder="جست‌وجوی غذا..." oninput="renderMenu()"></div></div><div class="category-bar" id="category-bar"></div><div id="menu"></div></section>
+<section class="checkout-layout" id="checkout">
+<div class="panel"><div class="panel-title"><h2>🛒 سبد خرید شما</h2><button class="clear-btn" type="button" onclick="clearCart()">پاک کردن سبد</button></div><div id="cart"><div class="cart-empty"><span>🛍️</span>سبد خریدت هنوز خالیه.</div></div><div class="cart-total"><span>مبلغ کل</span><strong id="total">۰ تومان</strong></div></div>
+<div class="panel"><h2>📍 اطلاعات تحویل سفارش</h2>
+<div id="account-status" class="account-line"><span>برای ثبت سفارش باید وارد حساب شوی.</span><button type="button" class="secondary-btn" onclick="openAuth()">ورود / ثبت‌نام</button></div>
+<form id="order-form" onsubmit="submitOrder(event)">
+<div class="field"><label for="name">نام و نام خانوادگی</label><input id="name" autocomplete="name" placeholder="نام شما" required></div>
+<div class="field"><label for="phone">شماره موبایل</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="شماره موبایل" required></div>
+<div class="field"><label for="address">آدرس دقیق</label><textarea id="address" autocomplete="street-address" placeholder="آدرس و نشانی تحویل سفارش..." required></textarea></div>
+<div class="field"><label for="note">توضیحات سفارش (اختیاری)</label><textarea id="note" placeholder="مثلاً سس جداگانه باشد..."></textarea></div>
+<button class="primary-btn submit-btn" id="submit-btn" type="submit">ورود و ثبت سفارش</button>
+<p class="form-hint">منو و سبد خرید بدون حساب قابل استفاده است؛ برای ثبت نهایی سفارش باید شماره موبایل تأیید شده باشد.</p>
+</form></div></section>
 </main>
-<footer>
-  <div class="footer-inner">
-    <div><div class="footer-brand">چار<span>چیز</span> 🍕</div><p>چارچیز؛ همیشه خوشمزه ❤️</p>
-      <p><a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer" style="color:#ff817a;font-weight:800">اینستاگرام: @4__chees</a></p>
-    </div>
-    <p>FAST FOOD CHARCHIZ</p>
-  </div>
-  <div class="footer-bottom">© چارچیز — سفارش آنلاین</div>
-</footer>
+<footer><div class="footer-inner"><div><div class="footer-brand">چار<span>چیز</span> 🍕</div><p>چارچیز؛ همیشه خوشمزه ❤️</p><p><a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer" style="color:#ff817a;font-weight:800">اینستاگرام: @4__chees</a></p></div><p>FAST FOOD CHARCHIZ</p></div><div class="footer-bottom">© چارچیز — سفارش آنلاین</div></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal-backdrop" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+<div class="modal"><h2 id="auth-title">ورود به حساب چارچیز</h2><p>برای ثبت سفارش، شماره موبایلت رو تأیید کن. کد ورود برای مدیر چارچیز ارسال می‌شه و مدیر اون رو با پیامک عادی برات می‌فرسته.</p>
+<div class="auth-step active" id="step-phone"><div class="field"><label for="auth-phone">شماره موبایل</label><input id="auth-phone" type="tel" inputmode="tel" placeholder="مثلاً 09123456789"></div><button class="primary-btn submit-btn" id="request-code-btn" onclick="requestCode()">دریافت کد تأیید</button></div>
+<div class="auth-step" id="step-code"><div class="field"><label for="auth-code">کد شش‌رقمی</label><input id="auth-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="کد ارسال‌شده"></div><button class="primary-btn submit-btn" id="verify-code-btn" onclick="verifyCode()">تأیید و ورود</button><button class="secondary-btn submit-btn" onclick="backToPhone()">تغییر شماره</button></div>
+<div class="modal-actions"><button class="secondary-btn" onclick="closeAuth()">بستن</button></div>
+</div></div>
 <script>
 "use strict";
-
-/* منوی فعلی چارچیز؛ قیمت‌ها به تومان هستند. */
-const products = [
- {category:"🍔 برگرها",items:[
-  ["بمب چارچیز",400000,"🍔"],["سوخاری برگر",290000,"🍔"],["سوخاری",250000,"🍗"],["غول برگر",300000,"🍔"],
-  ["چیزبرگر",200000,"🍔"],["چیزبرگر با قارچ",220000,"🍔"],["چیکن برگر",300000,"🍔"],["آژان",300000,"🍔"],
-  ["ماشروم برگر",250000,"🍔"],["رویال برگر",280000,"🍔"],["همبرگر دستساز",280000,"🍔"],["هندی برگر",250000,"🍔"],
-  ["دوبل برگر",270000,"🍔"],["دوبل برگر با قارچ",300000,"🍔"],["پپرونی برگر با قارچ",270000,"🍔"],["همبرگر",140000,"🍔"]
- ]},
- {category:"🥪 ساندویچ‌ها",items:[
-  ["ژامبون قارچ و پنیر تنوری",240000,"🥪"],["بچ",240000,"🥪"],["هات داگ قارچ و پنیر",240000,"🌭"],["کوکتل قارچ و پنیر",240000,"🌭"],
-  ["مرغ قارچ و پنیر",270000,"🥪"],["مرغ و قارچ",230000,"🥪"],["بندری",150000,"🌭"],["بندری قارچ و پنیر",200000,"🌭"],
-  ["فلافل",140000,"🥙"],["فلافل قارچ و پنیر",180000,"🥙"],["جگر چرخ‌کرده",220000,"🥪"],["کالباس",140000,"🥪"],
-  ["ژامبون سرد",200000,"🥪"],["سوسیس سیب زمینی",180000,"🌭"],["ماکارونی",140000,"🍝"]
- ]},
- {category:"🍗 سوخاری‌ها",items:[
-  ["مغز فیله سوخاری ۵۰۰ گرم",650000,"🍗"],["سیب زمینی سرخ کرده","به‌زودی","🍟"]
- ]},
- {category:"🍕 پیتزاها",items:[
-  ["مخصوص سرآشپز چارچیز",[500000,560000,630000,890000],"🍕"],["مخصوص",[380000,490000,540000,780000],"🍕"],
-  ["سوخاری",[450000,500000,600000,830000],"🍕"],["رست بیفو",[480000,400000,620000,880000],"🍕"],
-  ["پپرونی رست بیفو",[480000,560000,620000,850000],"🍕"],["مرغ و قارچ",[420000,540000,590000,790000],"🍕"],
-  ["پپرونی مرغ و قارچ",[420000,540000,590000,790000],"🍕"],["کلاسیک",[380000,490000,540000,780000],"🍕"],
-  ["بیفا",[420000,540000,590000,790000],"🍕"],["میکس",[450000,540000,610000,850000],"🍕"],
-  ["مخلوط",[350000,440000,490000,670000],"🍕"],["پپرونی",[390000,480000,540000,690000],"🍕"]
- ]}
+const API="https://charcheez-bot.asdzadhamyr077.workers.dev";
+const products=[
+{category:"🍔 برگرها",items:[["بمب چارچیز",400000,"🍔"],["سوخاری برگر",290000,"🍔"],["سوخاری",250000,"🍗"],["غول برگر",300000,"🍔"],["چیزبرگر",200000,"🍔"],["چیزبرگر با قارچ",220000,"🍔"],["چیکن برگر",300000,"🍔"],["آژان",300000,"🍔"],["ماشروم برگر",250000,"🍔"],["رویال برگر",280000,"🍔"],["همبرگر دستساز",280000,"🍔"],["هندی برگر",250000,"🍔"],["دوبل برگر",270000,"🍔"],["دوبل برگر با قارچ",300000,"🍔"],["پپرونی برگر با قارچ",270000,"🍔"],["همبرگر",140000,"🍔"]]},
+{category:"🥪 ساندویچ‌ها",items:[["ژامبون قارچ و پنیر تنوری",240000,"🥪"],["بچ",240000,"🥪"],["هات داگ قارچ و پنیر",240000,"🌭"],["کوکتل قارچ و پنیر",240000,"🌭"],["مرغ قارچ و پنیر",270000,"🥪"],["مرغ و قارچ",230000,"🥪"],["بندری",150000,"🌭"],["بندری قارچ و پنیر",200000,"🌭"],["فلافل",140000,"🥙"],["فلافل قارچ و پنیر",180000,"🥙"],["جگر چرخ‌کرده",220000,"🥪"],["کالباس",140000,"🥪"],["ژامبون سرد",200000,"🥪"],["سوسیس سیب زمینی",180000,"🌭"],["ماکارونی",140000,"🍝"]]},
+{category:"🍗 سوخاری‌ها",items:[["مغز فیله سوخاری ۵۰۰ گرم",650000,"🍗"],["سیب زمینی سرخ کرده","به‌زودی","🍟"]]},
+{category:"🍕 پیتزاها",items:[["مخصوص سرآشپز چارچیز",[500000,560000,630000,890000],"🍕"],["مخصوص",[380000,490000,540000,780000],"🍕"],["سوخاری",[450000,500000,600000,830000],"🍕"],["رست بیفو",[480000,400000,620000,880000],"🍕"],["پپرونی رست بیفو",[480000,560000,620000,850000],"🍕"],["مرغ و قارچ",[420000,540000,590000,790000],"🍕"],["پپرونی مرغ و قارچ",[420000,540000,590000,790000],"🍕"],["کلاسیک",[380000,490000,540000,780000],"🍕"],["بیفا",[420000,540000,590000,790000],"🍕"],["میکس",[450000,540000,610000,850000],"🍕"],["مخلوط",[350000,440000,490000,670000],"🍕"],["پپرونی",[390000,480000,540000,690000],"🍕"]]}
 ];
 const sizes=["کوچک","متوسط","بزرگ","نیم‌متری"];
 const productImages={
-"بمب چارچیز":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
-"سوخاری برگر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=82",
-"سوخاری":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=82",
-"غول برگر":"https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=82",
-"چیزبرگر":"https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=82",
-"چیزبرگر با قارچ":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=82",
-"چیکن برگر":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=82",
-"آژان":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=82",
-"ماشروم برگر":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82",
-"رویال برگر":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82",
-"همبرگر دستساز":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
-"هندی برگر":"https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=82",
-"دوبل برگر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=82",
-"دوبل برگر با قارچ":"https://images.unsplash.com/photo-1571091718767-18b5b1457ADD?auto=format&fit=crop&w=800&q=82",
-"پپرونی برگر با قارچ":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82",
-"همبرگر":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
-"ژامبون قارچ و پنیر تنوری":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
-"بچ":"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=82",
-"هات داگ قارچ و پنیر":"https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=800&q=82",
-"کوکتل قارچ و پنیر":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
-"مرغ قارچ و پنیر":"https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=82",
-"مرغ و قارچ":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82",
-"بندری":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
-"بندری قارچ و پنیر":"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=82",
-"فلافل":"https://images.unsplash.com/photo-1593001874117-c99c0c2c3e88?auto=format&fit=crop&w=800&q=82",
-"فلافل قارچ و پنیر":"https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=800&q=82",
-"جگر چرخ‌کرده":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
-"کالباس":"https://images.unsplash.com/photo-1554433607-66b5efe9d304?auto=format&fit=crop&w=800&q=82",
-"ژامبون سرد":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82",
-"سوسیس سیب زمینی":"https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=82",
-"ماکارونی":"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=82",
-"مغز فیله سوخاری ۵۰۰ گرم":"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=800&q=82",
-"سیب زمینی سرخ کرده":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82",
-"مخصوص سرآشپز چارچیز":"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=82",
-"مخصوص":"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=82",
-"رست بیفو":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=82",
-"پپرونی رست بیفو":"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=82",
-"پپرونی مرغ و قارچ":"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=82",
-"کلاسیک":"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=82",
-"بیفا":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=82",
-"میکس":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=82",
-"مخلوط":"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=82",
-"پپرونی":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82"
+"بمب چارچیز":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82","سوخاری برگر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=82","سوخاری":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=82","غول برگر":"https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=82","چیزبرگر":"https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=82","چیزبرگر با قارچ":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=82","چیکن برگر":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=82","آژان":"https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=82","ماشروم برگر":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82","رویال برگر":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82","همبرگر دستساز":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82","هندی برگر":"https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=800&q=82","دوبل برگر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=82","دوبل برگر با قارچ":"https://images.unsplash.com/photo-1571091718767-18b5b1457ADD?auto=format&fit=crop&w=800&q=82","پپرونی برگر با قارچ":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=82","همبرگر":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=82",
+"ژامبون قارچ و پنیر تنوری":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82","بچ":"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=82","هات داگ قارچ و پنیر":"https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=800&q=82","کوکتل قارچ و پنیر":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82","مرغ قارچ و پنیر":"https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=82","مرغ و قارچ":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82","بندری":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82","بندری قارچ و پنیر":"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=82","فلافل":"https://images.unsplash.com/photo-1593001874117-c99c0c2c3e88?auto=format&fit=crop&w=800&q=82","فلافل قارچ و پنیر":"https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=800&q=82","جگر چرخ‌کرده":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82","کالباس":"https://images.unsplash.com/photo-1554433607-66b5efe9d304?auto=format&fit=crop&w=800&q=82","ژامبون سرد":"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=800&q=82","سوسیس سیب زمینی":"https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=82","ماکارونی":"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=82","مغز فیله سوخاری ۵۰۰ گرم":"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=800&q=82","سیب زمینی سرخ کرده":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82",
+"مخصوص سرآشپز چارچیز":"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=82","مخصوص":"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=82","رست بیفو":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=82","پپرونی رست بیفو":"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=82","پپرونی مرغ و قارچ":"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=82","کلاسیک":"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=82","بیفا":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=82","میکس":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=82","مخلوط":"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=82","پپرونی":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=82"
 };
-
-let cart={};
-let activeCategory="همه";
-let sendingOrder=false;
-const ORDER_ENDPOINT="https://charcheez-bot.asdzadhamyr077.workers.dev/";
-
-function money(value){return Number(value).toLocaleString("fa-IR")+" تومان";}
-function showToast(message){
- const toast=document.getElementById("toast");
- toast.textContent=message;toast.classList.add("show");
- clearTimeout(showToast.timer);
- showToast.timer=setTimeout(()=>toast.classList.remove("show"),3200);
+let cart={},activeCategory="همه",sendingOrder=false,pendingPhone="";
+let authToken=localStorage.getItem("charcheez_session")||"";
+const $=id=>document.getElementById(id);
+function money(v){return Number(v).toLocaleString("fa-IR")+" تومان"}
+function showToast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),3500)}
+async function api(path,data={},method="POST"){
+ const headers={"Content-Type":"application/json"};
+ if(authToken)headers.Authorization="Bearer "+authToken;
+ const res=await fetch(API+path,{method,headers,body:method==="GET"?undefined:JSON.stringify(data)});
+ let result={};try{result=await res.json()}catch{}
+ if(!res.ok||result.success!==true)throw new Error(result.error||"ارتباط با سرور برقرار نشد.");
+ return result;
 }
-function renderCategories(){
- const bar=document.getElementById("category-bar");
- const names=["همه",...products.map(group=>group.category)];
- bar.innerHTML=names.map(name=>`<button type="button" class="category-chip ${activeCategory===name?"active":""}" data-category="${name}">${name}</button>`).join("");
- bar.querySelectorAll("button").forEach(button=>button.addEventListener("click",()=>setCategory(button.dataset.category)));
+function renderCategories(){const bar=$("category-bar"),names=["همه",...products.map(g=>g.category)];bar.innerHTML=names.map(n=>`<button type="button" class="category-chip ${activeCategory===n?"active":""}" data-category="${n}">${n}</button>`).join("");bar.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{activeCategory=b.dataset.category;renderCategories();renderMenu()}))}
+function renderMenu(){const term=$("search").value.trim().toLocaleLowerCase("fa");let html="";
+ products.forEach((group,g)=>{if(activeCategory!=="همه"&&activeCategory!==group.category)return;const found=group.items.map((p,i)=>({p,i})).filter(x=>x.p[0].toLocaleLowerCase("fa").includes(term));if(!found.length)return;
+ html+=`<section class="menu-group"><div class="group-title"><h3>${group.category}</h3></div><div class="menu-grid">`;
+ found.forEach(({p,i})=>{const price=p[1],hasSizes=Array.isArray(price),unavailable=typeof price!=="number"&&!hasSizes;const priceText=hasSizes?"از "+money(Math.min(...price)):typeof price==="number"?money(price):price;
+ const select=hasSizes?`<select class="size-select" id="size-${g}-${i}" aria-label="اندازه ${p[0]}">${sizes.map((s,j)=>`<option value="${j}">${s} - ${money(price[j])}</option>`).join("")}</select>`:"";const image=productImages[p[0]]||"";
+ html+=`<article class="product-card"><div class="product-photo"><img src="${image}" alt="${p[0]}" loading="lazy" onerror="this.style.display='none'"><span class="photo-tag">${group.category.split(" ")[0]} چارچیز</span></div><div class="product-info"><h4>${p[0]}</h4><div class="product-meta">تهیه‌شده با عشق در چارچیز</div><div class="product-price">${priceText}</div><div class="product-actions">${select}<button type="button" class="add-btn" data-g="${g}" data-i="${i}" ${unavailable?"disabled":""}>${unavailable?"به‌زودی":"+ افزودن"}</button></div></div></article>`});
+ html+="</div></section>";});
+ $("menu").innerHTML=html||'<div class="empty-search">غذایی با این نام پیدا نشد. عبارت دیگری جست‌وجو کن.</div>';
+ document.querySelectorAll(".add-btn[data-g]").forEach(b=>b.addEventListener("click",()=>add(Number(b.dataset.g),Number(b.dataset.i))));
 }
-function setCategory(name){activeCategory=name;renderCategories();renderMenu();}
-function renderMenu(){
- const term=document.getElementById("search").value.trim().toLocaleLowerCase("fa");
- let html="";
- products.forEach((group,g)=>{
-  if(activeCategory!=="همه"&&activeCategory!==group.category)return;
-  const found=group.items.map((p,i)=>({p,i})).filter(x=>x.p[0].toLocaleLowerCase("fa").includes(term));
-  if(!found.length)return;
-  html+=`<section class="menu-group"><div class="group-title"><h3>${group.category}</h3></div><div class="menu-grid">`;
-  found.forEach(({p,i})=>{
-   const price=p[1],hasSizes=Array.isArray(price),unavailable=typeof price!=="number"&&!hasSizes;
-   const priceText=hasSizes?"از "+money(Math.min(...price)):typeof price==="number"?money(price):price;
-   const select=hasSizes?`<select class="size-select" id="size-${g}-${i}" aria-label="اندازه ${p[0]}">${sizes.map((s,j)=>`<option value="${j}">${s} - ${money(price[j])}</option>`).join("")}</select>`:"";
-   const image=productImages[p[0]]||"";
-   html+=`<article class="product-card"><div class="product-photo"><img src="${image}" alt="${p[0]}" loading="lazy" onerror="this.style.display='none'"><span class="photo-tag">${group.category.split(" ")[0]} چارچیز</span></div>
-   <div class="product-info"><h4>${p[0]}</h4><div class="product-meta">تهیه‌شده با عشق در چارچیز</div><div class="product-price">${priceText}</div>
-   <div class="product-actions">${select}<button type="button" class="add-btn" data-g="${g}" data-i="${i}" ${unavailable?"disabled":""}>${unavailable?"به‌زودی":"+ افزودن"}</button></div></div></article>`;
-  });
-  html+="</div></section>";
- });
- document.getElementById("menu").innerHTML=html||'<div class="empty-search">غذایی با این نام پیدا نشد. عبارت دیگری جست‌وجو کن.</div>';
- document.querySelectorAll(".add-btn[data-g]").forEach(button=>button.addEventListener("click",()=>add(Number(button.dataset.g),Number(button.dataset.i))));
-}
-function add(g,i){
- const product=products[g].items[i];
- const sizeIndex=Array.isArray(product[1])?Number(document.getElementById(`size-${g}-${i}`).value):-1;
- const price=sizeIndex>=0?product[1][sizeIndex]:product[1];
- if(typeof price!=="number"){showToast("قیمت این محصول هنوز مشخص نشده است.");return;}
- const key=g+"-"+i+"-"+sizeIndex;
- if(!cart[key])cart[key]={name:product[0]+(sizeIndex>=0?" - "+sizes[sizeIndex]:""),price,qty:0};
- cart[key].qty++;renderCart();showToast(product[0]+" به سبد خرید اضافه شد.");
-}
-function changeQuantity(key,amount){
- if(!cart[key])return;
- cart[key].qty+=amount;
- if(cart[key].qty<=0)delete cart[key];
- renderCart();
-}
-function clearCart(){cart={};renderCart();showToast("سبد خرید خالی شد.");}
-function renderCart(){
- const keys=Object.keys(cart);let total=0,count=0,html="";
- keys.forEach(key=>{
-  const item=cart[key];total+=item.price*item.qty;count+=item.qty;
-  html+=`<div class="cart-row"><div><b>${item.name}</b><small>${money(item.price)} × ${item.qty.toLocaleString("fa-IR")}</small></div>
-  <div class="qty"><button type="button" aria-label="کم کردن" data-key="${key}" data-change="-1">−</button><strong>${item.qty.toLocaleString("fa-IR")}</strong><button type="button" aria-label="زیاد کردن" data-key="${key}" data-change="1">+</button></div></div>`;
- });
- document.getElementById("cart").innerHTML=html||'<div class="cart-empty"><span>🛍️</span>سبد خریدت هنوز خالیه.</div>';
- document.getElementById("total").textContent=money(total);
- document.getElementById("cart-count").textContent=count.toLocaleString("fa-IR");
- document.querySelectorAll("[data-change]").forEach(button=>button.addEventListener("click",()=>changeQuantity(button.dataset.key,Number(button.dataset.change))));
-}
-async function submitOrder(event){
- event.preventDefault();
- if(sendingOrder)return;
- if(!Object.keys(cart).length){showToast("اول یک محصول به سبد خرید اضافه کن.");return;}
- const name=document.getElementById("name").value.trim();
- const phone=document.getElementById("phone").value.trim();
- const address=document.getElementById("address").value.trim();
- const note=document.getElementById("note").value.trim();
- if(!name||!phone||!address){showToast("لطفاً اطلاعات تحویل را کامل کن.");return;}
- const items=Object.values(cart).map(item=>({
-  name:item.name,price:item.price,quantity:item.qty,subtotal:item.price*item.qty
- }));
- const total=items.reduce((sum,item)=>sum+item.subtotal,0);
- const order={
-  name,phone,address,note:note||"ندارد",items,total,
-  date:new Date().toLocaleString("fa-IR"),
-  source:"وب‌سایت چارچیز"
- };
- const button=document.getElementById("submit-btn");
- try{
-  sendingOrder=true;button.disabled=true;button.textContent="در حال ارسال سفارش...";
-  showToast("در حال ارسال سفارش به چارچیز...");
-  const response=await fetch(ORDER_ENDPOINT,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify(order)
-  });
-  let result={};
-  try{result=await response.json();}catch(_){}
-  if(!response.ok||result.success!==true){
-   throw new Error(result.error||"سرور سفارش را تأیید نکرد. دوباره تلاش کن.");
-  }
-  showToast("سفارش با موفقیت برای چارچیز ارسال شد ❤️");
-  cart={};renderCart();
-  document.getElementById("order-form").reset();
- }catch(error){
-  console.error("Order submission error:",error);
-  showToast("ارسال انجام نشد: "+(error.message||"خطای ارتباط با سرور"));
- }finally{
-  sendingOrder=false;button.disabled=false;button.textContent="ارسال سفارش به چارچیز";
- }
-}
-renderCategories();
-renderMenu();
-renderCart();
-
-/* ثبت Service Worker برای نسخه PWA، در صورت وجود فایل آن در مخزن */
-if("serviceWorker" in navigator){
- window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("/charcheez-order-app/service-worker.js")
-   .catch(error=>console.warn("Service worker:",error));
- });
-}
+function add(g,i){const p=products[g].items[i],si=Array.isArray(p[1])?Number($(`size-${g}-${i}`).value):-1,price=si>=0?p[1][si]:p[1];if(typeof price!=="number"){showToast("قیمت این محصول هنوز مشخص نشده است.");return}const key=g+"-"+i+"-"+si;if(!cart[key])cart[key]={name:p[0]+(si>=0?" - "+sizes[si]:""),price,qty:0};cart[key].qty++;renderCart();showToast(p[0]+" به سبد خرید اضافه شد.")}
+function changeQuantity(key,amount){if(!cart[key])return;cart[key].qty+=amount;if(cart[key].qty<=0)delete cart[key];renderCart()}
+function clearCart(){cart={};renderCart();showToast("سبد خرید خالی شد.")}
+function renderCart(){const keys=Object.keys(cart);let total=0,count=0,html="";keys.forEach(k=>{const x=cart[k];total+=x.price*x.qty;count+=x.qty;html+=`<div class="cart-row"><div><b>${x.name}</b><small>${money(x.price)} × ${x.qty.toLocaleString("fa-IR")}</small></div><div class="qty"><button type="button" aria-label="کم کردن" data-key="${k}" data-change="-1">−</button><strong>${x.qty.toLocaleString("fa-IR")}</strong><button type="button" aria-label="زیاد کردن" data-key="${k}" data-change="1">+</button></div></div>`});
+ $("cart").innerHTML=html||'<div class="cart-empty"><span>🛍️</span>سبد خریدت هنوز خالیه.</div>';$("total").textContent=money(total);$("cart-count").textContent=count.toLocaleString("fa-IR");document.querySelectorAll("[data-change]").forEach(b=>b.addEventListener("click",()=>changeQuantity(b.dataset.key,Number(b.dataset.change))))}
+function openAuth(){ $("auth-modal").classList.add("show");$("step-phone").classList.add("active");$("step-code").classList.remove("active");$("auth-phone").value=$("phone").value.trim(); }
+function closeAuth(){$("auth-modal").classList.remove("show")}
+function backToPhone(){$("step-code").classList.remove("active");$("step-phone").classList.add("active")}
+async function requestCode(){const phone=$("auth-phone").value.trim();const b=$("request-code-btn");if(!phone){showToast("شماره موبایل را وارد کن.");return}b.disabled=true;b.textContent="در حال ارسال...";
+ try{await api("/auth/request",{phone});pendingPhone=phone;$("step-phone").classList.remove("active");$("step-code").classList.add("active");showToast("کد برای مدیر چارچیز ارسال شد. منتظر پیامک باش.")}catch(e){showToast(e.message)}finally{b.disabled=false;b.textContent="دریافت کد تأیید"}}
+async function verifyCode(){const code=$("auth-code").value.trim(),b=$("verify-code-btn");if(!/^\d{6}$/.test(code)){showToast("کد شش‌رقمی را درست وارد کن.");return}b.disabled=true;b.textContent="در حال بررسی...";
+ try{const result=await api("/auth/verify",{phone:pendingPhone,code});authToken=result.token;localStorage.setItem("charcheez_session",authToken);$("phone").value=result.phone||pendingPhone;if(result.profile){$("name").value=result.profile.name||"";$("address").value=result.profile.address||""}updateAccount();closeAuth();showToast("ورود با موفقیت انجام شد ❤️")}
+ catch(e){showToast(e.message)}finally{b.disabled=false;b.textContent="تأیید و ورود"}}
+function updateAccount(){const el=$("account-status");if(authToken){el.innerHTML='<span>حساب شما فعال است.</span><button type="button" class="secondary-btn" onclick="logout()">خروج از حساب</button>';$("submit-btn").textContent="ارسال سفارش به چارچیز"}else{el.innerHTML='<span>برای ثبت سفارش باید وارد حساب شوی.</span><button type="button" class="secondary-btn" onclick="openAuth()">ورود / ثبت‌نام</button>';$("submit-btn").textContent="ورود و ثبت سفارش"}}
+async function logout(){try{await api("/auth/logout",{})}catch{}authToken="";localStorage.removeItem("charcheez_session");updateAccount();showToast("از حساب خارج شدی.")}
+async function submitOrder(event){event.preventDefault();if(sendingOrder)return;if(!Object.keys(cart).length){showToast("اول یک محصول به سبد خرید اضافه کن.");return}
+ if(!authToken){openAuth();showToast("برای ثبت سفارش ابتدا وارد حساب شو.");return}
+ const name=$("name").value.trim(),phone=$("phone").value.trim(),address=$("address").value.trim(),note=$("note").value.trim();if(!name||!phone||!address){showToast("لطفاً نام و آدرس را کامل کن.");return}
+ const items=Object.values(cart).map(x=>({name:x.name,price:x.price,quantity:x.qty,subtotal:x.price*x.qty})),total=items.reduce((s,x)=>s+x.subtotal,0);
+ const button=$("submit-btn");try{sendingOrder=true;button.disabled=true;button.textContent="در حال ارسال سفارش...";
+ await api("/profile",{name,address});await api("/order",{name,address,note:note||"ندارد",items,total,date:new Date().toLocaleString("fa-IR")});
+ showToast("سفارش با موفقیت برای چارچیز ارسال شد ❤️");cart={};renderCart();$("note").value="";
+ }catch(e){if(/نشست|وارد حساب|معتبر نیست/.test(e.message)){authToken="";localStorage.removeItem("charcheez_session");updateAccount();openAuth()}showToast("ارسال انجام نشد: "+e.message)}
+ finally{sendingOrder=false;button.disabled=false;button.textContent=authToken?"ارسال سفارش به چارچیز":"ورود و ثبت سفارش"}}
+async function restoreSession(){if(!authToken){updateAccount();return}try{const me=await api("/auth/me",{});$("phone").value=me.phone||"";if(me.profile){$("name").value=me.profile.name||"";$("address").value=me.profile.address||""}}catch{authToken="";localStorage.removeItem("charcheez_session")}updateAccount()}
+renderCategories();renderMenu();renderCart();restoreSession();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/charcheez-order-app/service-worker.js").catch(e=>console.warn("Service worker:",e)))}
 </script>
 </body>
 </html>

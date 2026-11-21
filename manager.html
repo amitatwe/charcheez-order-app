@@ -10,7 +10,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
 :root{--red:#e3322b;--dark:#171717;--cream:#f7f6f3;--line:#eceae6;--muted:#777}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--dark);font-family:Vazirmatn,Tahoma,sans-serif;min-height:100vh}
-button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .top{background:#111;color:white;padding:14px 18px;text-align:center;font-weight:900;font-size:19px}
 .top span{color:#ff625b}.wrap{width:min(480px,calc(100% - 28px));margin:34px auto}
 .card{background:white;border:1px solid var(--line);border-radius:22px;padding:23px;box-shadow:0 12px 35px #00000008}
@@ -37,6 +37,8 @@ h1{text-align:center;font-size:23px;margin:0 0 7px}.sub{text-align:center;color:
 .status-row button{border:0;border-radius:10px;background:var(--red);color:white;padding:10px 13px;font-weight:800;font-size:12px}
 .empty{padding:24px;text-align:center;color:#888;font-size:12px;background:#faf9f7;border-radius:13px;line-height:2}
 .loading{padding:18px;text-align:center;color:#777;font-size:12px}
+.tabs{display:flex;gap:7px;margin:20px 0}.tabs button{flex:1;border:0;border-radius:11px;padding:11px;background:#f2f1ee;font-weight:800;font-size:12px}.tabs button.active{background:#171717;color:#fff}
+.panel{display:none}.panel.active{display:block}.product-form{border:1px solid var(--line);border-radius:15px;padding:14px;margin:12px 0}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fcfcfb;font:inherit;font-size:14px;direction:rtl;text-align:right}.field textarea{min-height:72px;resize:vertical}.field input[type=file]{font-size:12px}.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.checkline{display:flex;align-items:center;gap:9px;font-size:13px;margin:12px 0}.checkline input{width:18px;height:18px}.product-row{display:flex;gap:10px;align-items:center;border:1px solid var(--line);padding:10px;border-radius:13px;margin:8px 0}.product-row img{width:58px;height:58px;object-fit:cover;border-radius:10px;background:#eee}.product-row .info{flex:1;min-width:0;font-size:12px;line-height:1.8}.product-row .actions{display:flex;flex-direction:column;gap:5px}.product-row button{border:0;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:800;background:#f2f1ee}.product-row button.del{background:#fff0ef;color:#b22}.form-actions{display:flex;gap:8px}.form-actions button{flex:1}.preview{max-width:100px;max-height:100px;object-fit:cover;border-radius:12px;display:none;margin-top:8px}
 </style>
 </head>
 <body>
@@ -69,8 +71,29 @@ h1{text-align:center;font-size:23px;margin:0 0 7px}.sub{text-align:center;color:
     <div class="logo">🍕</div>
     <h1>ورود موفق بود</h1>
     <div class="welcome" id="welcome"></div>
-    <div class="orders-head"><h2>سفارش‌های ثبت‌شده</h2><button class="refresh" id="refresh-btn" type="button">به‌روزرسانی</button></div>
-    <div id="orders-list"><div class="loading">در حال دریافت سفارش‌ها...</div></div>
+    <div class="tabs"><button type="button" class="active" data-tab="products-panel">مدیریت محصولات</button><button type="button" data-tab="orders-panel">سفارش‌ها</button></div>
+    <section class="panel active" id="products-panel">
+      <div class="orders-head"><h2>محصولات منو</h2><button class="refresh" id="refresh-products" type="button">به‌روزرسانی</button></div>
+      <form class="product-form" id="product-form">
+        <h3 id="form-title" style="margin:0 0 12px;font-size:15px">افزودن محصول جدید</h3>
+        <input type="hidden" id="product-id">
+        <div class="field"><label for="product-name">نام محصول</label><input id="product-name" required maxlength="100" placeholder="مثلاً چیزبرگر"></div>
+        <div class="field"><label for="product-category">دسته‌بندی</label><select id="product-category"><option>🍔 برگرها</option><option>🥪 ساندویچ‌ها</option><option>🍗 سوخاری‌ها</option><option>🍕 پیتزاها</option><option>🥤 نوشیدنی‌ها</option><option>🍟 پیش‌غذاها</option></select></div>
+        <div class="field"><label for="product-description">توضیحات محصول</label><textarea id="product-description" placeholder="توضیح کوتاه برای مشتری"></textarea></div>
+        <div class="field"><label for="product-contents">محتویات محصول</label><textarea id="product-contents" placeholder="مثلاً گوشت، پنیر، قارچ و سس"></textarea></div>
+        <div class="field" id="single-price-wrap"><label for="product-price">قیمت (تومان)</label><input id="product-price" type="number" min="0" inputmode="numeric" value="0"></div>
+        <div id="pizza-prices-wrap" style="display:none"><label style="font-size:12px;font-weight:800">قیمت سایزهای پیتزا (تومان)</label><div class="price-grid"><div class="field"><label>کوچک</label><input id="price-small" type="number" min="0" inputmode="numeric"></div><div class="field"><label>متوسط</label><input id="price-medium" type="number" min="0" inputmode="numeric"></div><div class="field"><label>بزرگ</label><input id="price-large" type="number" min="0" inputmode="numeric"></div><div class="field"><label>نیم‌متری</label><input id="price-half" type="number" min="0" inputmode="numeric"></div></div></div>
+        <div class="field"><label for="product-image">عکس محصول از گالری گوشی</label><input id="product-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><img id="image-preview" class="preview" alt="پیش‌نمایش عکس"></div>
+        <div class="field"><label for="product-sort">ترتیب نمایش</label><input id="product-sort" type="number" min="0" value="0" inputmode="numeric"></div>
+        <label class="checkline"><input id="product-active" type="checkbox" checked> محصول در منوی مشتری نمایش داده شود</label>
+        <div class="form-actions"><button class="btn" id="save-product" type="submit">ذخیره محصول</button><button class="btn secondary" id="reset-product" type="button">پاک کردن فرم</button></div>
+      </form>
+      <div class="orders-head"><h2>فهرست محصولات</h2></div><div id="products-list"><div class="loading">در حال دریافت محصولات...</div></div>
+    </section>
+    <section class="panel" id="orders-panel">
+      <div class="orders-head"><h2>سفارش‌های ثبت‌شده</h2><button class="refresh" id="refresh-btn" type="button">به‌روزرسانی</button></div>
+      <div id="orders-list"><div class="loading">در حال دریافت سفارش‌ها...</div></div>
+    </section>
     <button class="btn secondary" id="logout-btn" type="button">خروج از حساب مدیریت</button>
   </section>
 </main>
@@ -100,6 +123,7 @@ function showDashboard(phone){
   $("dashboard").classList.add("active");
   $("welcome").textContent="مدیر واردشده: "+phone;
   loadOrders();
+  loadProducts();
 }
 function showLogin(){
   $("login-card").style.display="block";
@@ -160,6 +184,21 @@ async function loadOrders(){
     }));
   }catch(error){list.innerHTML=`<div class="empty">${safeText(error.message)}<br>برای تلاش دوباره، به‌روزرسانی را بزن.</div>`}
 }
+const pizzaSizes=["کوچک","متوسط","بزرگ","نیم‌متری"];
+function togglePizzaFields(){const pizza=$("product-category").value.includes("پیتزا");$("pizza-prices-wrap").style.display=pizza?"block":"none";$("single-price-wrap").style.display=pizza?"none":"block"}
+function resetProductForm(){$("product-form").reset();$("product-id").value="";$("form-title").textContent="افزودن محصول جدید";$("product-active").checked=true;$("product-sort").value="0";$("product-price").value="0";$("image-preview").style.display="none";$("image-preview").src="";$("product-image").value="";togglePizzaFields()}
+function renderProduct(p){const prices=Array.isArray(p.prices)?p.prices:[];const priceText=prices.length?pizzaSizes.map((z,i)=>z+": "+new Intl.NumberFormat("fa-IR").format(prices[i]||0)).join(" | "):new Intl.NumberFormat("fa-IR").format(Number(p.price)||0)+" تومان";return `<article class="product-row"><img src="${safeText(p.image_url||"")}" onerror="this.style.display='none'" alt=""><div class="info"><b>${safeText(p.name)}</b><br>${safeText(p.category)}<br>${priceText}<br>${Number(p.active)?"فعال":"غیرفعال"}</div><div class="actions"><button type="button" class="edit-product" data-id="${Number(p.id)}">ویرایش</button><button type="button" class="del" data-id="${Number(p.id)}">حذف</button></div></article>`}
+let productCache=[];
+async function loadProducts(){const list=$("products-list");list.innerHTML='<div class="loading">در حال دریافت محصولات...</div>';try{const r=await api("/manager/products",{},"GET");productCache=r.products||[];list.innerHTML=productCache.length?productCache.map(renderProduct).join(""):'<div class="empty">محصولی ثبت نشده است.</div>';list.querySelectorAll(".edit-product").forEach(b=>b.addEventListener("click",()=>editProduct(Number(b.dataset.id))));list.querySelectorAll(".del").forEach(b=>b.addEventListener("click",()=>deleteProduct(Number(b.dataset.id))))}catch(e){list.innerHTML=`<div class="empty">${safeText(e.message)}</div>`}}
+function editProduct(id){const p=productCache.find(x=>Number(x.id)===id);if(!p)return;$("product-id").value=p.id;$("product-name").value=p.name||"";$("product-category").value=p.category||"🍔 برگرها";$("product-description").value=p.description||"";$("product-contents").value=p.contents||"";$("product-price").value=p.price||0;const a=Array.isArray(p.prices)?p.prices:[];["price-small","price-medium","price-large","price-half"].forEach((id,i)=>$(id).value=a[i]||0);$("product-sort").value=p.sort_order||0;$("product-active").checked=Number(p.active)===1;$("image-preview").src=p.image_url||"";$("image-preview").style.display=p.image_url?"block":"none";$("form-title").textContent="ویرایش محصول: "+p.name;$("product-form").scrollIntoView({behavior:"smooth",block:"start"});togglePizzaFields()}
+async function deleteProduct(id){if(!confirm("این محصول برای همیشه حذف شود؟"))return;try{await api("/manager/products/delete",{id});toast("محصول حذف شد.");await loadProducts()}catch(e){toast(e.message)}}
+function readFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file)})}
+$("product-category").addEventListener("change",togglePizzaFields);
+$("product-image").addEventListener("change",async()=>{const f=$("product-image").files[0];if(!f)return;if(f.size>4*1024*1024){toast("حجم عکس باید کمتر از ۴ مگابایت باشد.");$("product-image").value="";return}const data=await readFile(f);$("image-preview").src=data;$("image-preview").style.display="block"});
+$("reset-product").addEventListener("click",resetProductForm);
+$("refresh-products").addEventListener("click",loadProducts);
+$("product-form").addEventListener("submit",async e=>{e.preventDefault();const button=$("save-product");button.disabled=true;button.textContent="در حال ذخیره...";try{let imageUrl=$("image-preview").src.startsWith("data:")?"":( $("image-preview").src||"");let imagePath="";const file=$("product-image").files[0];if(file){const dataUrl=await readFile(file);const up=await api("/manager/products/image",{filename:file.name,data_url:dataUrl});imageUrl=up.image_url;imagePath=up.image_path}else{const old=productCache.find(p=>Number(p.id)===Number($("product-id").value));imagePath=old?.image_path||""}const pizza=$("product-category").value.includes("پیتزا");const payload={id:Number($("product-id").value)||0,name:$("product-name").value.trim(),category:$("product-category").value,description:$("product-description").value,contents:$("product-contents").value,price:pizza?Number($("price-small").value)||0:Number($("product-price").value)||0,prices:pizza?["price-small","price-medium","price-large","price-half"].map(id=>Number($(id).value)||0):null,image_url:imageUrl,image_path:imagePath,active:$("product-active").checked?1:0,sort_order:Number($("product-sort").value)||0};await api("/manager/products/save",payload);toast("محصول با موفقیت ذخیره شد.");resetProductForm();await loadProducts()}catch(err){toast(err.message)}finally{button.disabled=false;button.textContent="ذخیره محصول"}});
+document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab));if(b.dataset.tab==="orders-panel")loadOrders();else loadProducts()}));
 async function logout(){
   try{await api("/manager/auth/logout",{})}catch{}
   managerToken="";localStorage.removeItem("charcheez_manager_session");

@@ -26,6 +26,17 @@ h1{text-align:center;font-size:23px;margin:0 0 7px}.sub{text-align:center;color:
 .dashboard{display:none}.dashboard.active{display:block}.welcome{background:#f7f6f3;border-radius:13px;padding:15px;margin:16px 0;font-size:13px;line-height:2}
 .notice{border:1px dashed #ddd;border-radius:13px;padding:16px;color:#666;font-size:12px;line-height:2}
 .small{font-size:10px;color:#999;text-align:center;margin-top:18px}
+.orders-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
+.orders-head h2{font-size:17px;margin:0}.refresh{border:0;border-radius:10px;background:#f2f1ee;padding:9px 12px;font-size:12px;font-weight:800}
+.order{border:1px solid var(--line);border-radius:15px;padding:14px;margin:12px 0;background:#fff}
+.order-top{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12px;font-weight:900}
+.order-meta{color:#777;font-size:11px;line-height:2;margin:8px 0;overflow-wrap:anywhere}
+.order-items{background:#faf9f7;border-radius:10px;padding:10px;font-size:12px;line-height:2;white-space:pre-wrap}
+.order-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;font-size:12px;font-weight:900}
+.status-row{display:flex;gap:7px;margin-top:12px;align-items:center}.status-row select{flex:1;min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:12px}
+.status-row button{border:0;border-radius:10px;background:var(--red);color:white;padding:10px 13px;font-weight:800;font-size:12px}
+.empty{padding:24px;text-align:center;color:#888;font-size:12px;background:#faf9f7;border-radius:13px;line-height:2}
+.loading{padding:18px;text-align:center;color:#777;font-size:12px}
 </style>
 </head>
 <body>
@@ -58,10 +69,8 @@ h1{text-align:center;font-size:23px;margin:0 0 7px}.sub{text-align:center;color:
     <div class="logo">🍕</div>
     <h1>ورود موفق بود</h1>
     <div class="welcome" id="welcome"></div>
-    <div class="notice">
-      حساب مدیریت فعال است. بخش‌های مدیریت محصولات، قیمت‌ها، موجودی و سفارش‌ها در مرحله بعد به سرور متصل می‌شوند.
-      در حال حاضر این نسخه برای آزمایش ورود امن مدیر است.
-    </div>
+    <div class="orders-head"><h2>سفارش‌های ثبت‌شده</h2><button class="refresh" id="refresh-btn" type="button">به‌روزرسانی</button></div>
+    <div id="orders-list"><div class="loading">در حال دریافت سفارش‌ها...</div></div>
     <button class="btn secondary" id="logout-btn" type="button">خروج از حساب مدیریت</button>
   </section>
 </main>
@@ -90,6 +99,7 @@ function showDashboard(phone){
   $("login-card").style.display="none";
   $("dashboard").classList.add("active");
   $("welcome").textContent="مدیر واردشده: "+phone;
+  loadOrders();
 }
 function showLogin(){
   $("login-card").style.display="block";
@@ -128,6 +138,28 @@ async function restore(){
   try{const result=await api("/manager/auth/me",{});showDashboard(result.user?.phone||"مدیر")}
   catch{managerToken="";localStorage.removeItem("charcheez_manager_session");showLogin()}
 }
+const statusNames={new:"جدید",confirmed:"تأیید شده",preparing:"در حال آماده‌سازی",sent:"ارسال شده",completed:"تکمیل شده",cancelled:"لغو شده"};
+function safeText(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+function renderOrder(order){
+  let items=[];try{items=JSON.parse(order.items||"[]")}catch{}
+  const lines=items.map(item=>`${safeText(item.name)} × ${Number(item.quantity)||1} — ${new Intl.NumberFormat("fa-IR").format(Number(item.subtotal)||0)} تومان`).join("\n");
+  const options=Object.entries(statusNames).map(([value,label])=>`<option value="${value}" ${order.status===value?"selected":""}>${label}</option>`).join("");
+  return `<article class="order" data-id="${Number(order.id)}"><div class="order-top"><span>سفارش #${Number(order.id)}</span><span>${safeText(statusNames[order.status]||order.status)}</span></div><div class="order-meta">مشتری: ${safeText(order.customer_name)} | ${safeText(order.customer_phone)}<br>آدرس: ${safeText(order.address)}<br>زمان: ${safeText(order.order_date||order.created_at)}${order.note?`<br>توضیحات: ${safeText(order.note)}`:""}</div><div class="order-items">${lines||"اقلام ثبت نشده"}</div><div class="order-bottom"><span>مبلغ کل</span><span>${new Intl.NumberFormat("fa-IR").format(Number(order.total)||0)} تومان</span></div><div class="status-row"><select aria-label="وضعیت سفارش">${options}</select><button type="button" class="save-status">ثبت وضعیت</button></div></article>`;
+}
+async function loadOrders(){
+  const list=$("orders-list");list.innerHTML='<div class="loading">در حال دریافت سفارش‌ها...</div>';
+  try{
+    const result=await api("/manager/orders",{});
+    if(!result.orders||!result.orders.length){list.innerHTML='<div class="empty">هنوز سفارشی ثبت نشده است.</div>';return}
+    list.innerHTML=result.orders.map(renderOrder).join("");
+    list.querySelectorAll(".save-status").forEach(button=>button.addEventListener("click",async()=>{
+      const card=button.closest(".order"),id=Number(card.dataset.id),status=card.querySelector("select").value;
+      button.disabled=true;button.textContent="...";
+      try{await api("/manager/orders/status",{id,status});toast("وضعیت سفارش به‌روزرسانی شد.");await loadOrders()}
+      catch(error){toast(error.message);button.disabled=false;button.textContent="ثبت وضعیت"}
+    }));
+  }catch(error){list.innerHTML=`<div class="empty">${safeText(error.message)}<br>برای تلاش دوباره، به‌روزرسانی را بزن.</div>`}
+}
 async function logout(){
   try{await api("/manager/auth/logout",{})}catch{}
   managerToken="";localStorage.removeItem("charcheez_manager_session");
@@ -137,6 +169,7 @@ $("request-btn").addEventListener("click",requestCode);
 $("verify-btn").addEventListener("click",verifyCode);
 $("change-phone").addEventListener("click",()=>{$("step-code").classList.remove("active");$("step-phone").classList.add("active")});
 $("logout-btn").addEventListener("click",logout);
+$("refresh-btn").addEventListener("click",loadOrders);
 restore();
 </script>
 </body>

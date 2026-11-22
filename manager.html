@@ -1,215 +1,28 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#171717">
-<meta name="description" content="اپلیکیشن مدیریت چارچیز">
-<title>چارچیز | مدیریت</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
-:root{--red:#e3322b;--dark:#171717;--cream:#f7f6f3;--line:#eceae6;--muted:#777}
-*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--dark);font-family:Vazirmatn,Tahoma,sans-serif;min-height:100vh}
-button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
-.top{background:#111;color:white;padding:14px 18px;text-align:center;font-weight:900;font-size:19px}
-.top span{color:#ff625b}.wrap{width:min(480px,calc(100% - 28px));margin:34px auto}
-.card{background:white;border:1px solid var(--line);border-radius:22px;padding:23px;box-shadow:0 12px 35px #00000008}
-.logo{width:58px;height:58px;border-radius:18px;background:var(--dark);display:grid;place-items:center;color:white;font-size:30px;margin:0 auto 15px}
-h1{text-align:center;font-size:23px;margin:0 0 7px}.sub{text-align:center;color:#777;font-size:12px;line-height:2;margin:0 0 22px}
-.step{display:none}.step.active{display:block}.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:7px}
-.field input{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fcfcfb;outline:none;font-size:16px;direction:ltr;text-align:left}
-.field input:focus{border-color:#e5aaa7}.btn{width:100%;border:0;border-radius:12px;padding:14px;background:var(--red);color:white;font-weight:900;margin-top:8px}
-.btn:disabled{opacity:.55;cursor:wait}.secondary{background:#f2f1ee;color:#333}
-.hint{font-size:11px;color:#888;line-height:2;margin-top:14px}
-.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#171717;color:white;padding:12px 17px;border-radius:11px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center;z-index:5}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.dashboard{display:none}.dashboard.active{display:block}.welcome{background:#f7f6f3;border-radius:13px;padding:15px;margin:16px 0;font-size:13px;line-height:2}
-.notice{border:1px dashed #ddd;border-radius:13px;padding:16px;color:#666;font-size:12px;line-height:2}
-.small{font-size:10px;color:#999;text-align:center;margin-top:18px}
-.orders-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
-.orders-head h2{font-size:17px;margin:0}.refresh{border:0;border-radius:10px;background:#f2f1ee;padding:9px 12px;font-size:12px;font-weight:800}
-.order{border:1px solid var(--line);border-radius:15px;padding:14px;margin:12px 0;background:#fff}
-.order-top{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12px;font-weight:900}
-.order-meta{color:#777;font-size:11px;line-height:2;margin:8px 0;overflow-wrap:anywhere}
-.order-items{background:#faf9f7;border-radius:10px;padding:10px;font-size:12px;line-height:2;white-space:pre-wrap}
-.order-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;font-size:12px;font-weight:900}
-.status-row{display:flex;gap:7px;margin-top:12px;align-items:center}.status-row select{flex:1;min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:12px}
-.status-row button{border:0;border-radius:10px;background:var(--red);color:white;padding:10px 13px;font-weight:800;font-size:12px}
-.empty{padding:24px;text-align:center;color:#888;font-size:12px;background:#faf9f7;border-radius:13px;line-height:2}
-.loading{padding:18px;text-align:center;color:#777;font-size:12px}
-.tabs{display:flex;gap:7px;margin:20px 0}.tabs button{flex:1;border:0;border-radius:11px;padding:11px;background:#f2f1ee;font-weight:800;font-size:12px}.tabs button.active{background:#171717;color:#fff}
-.panel{display:none}.panel.active{display:block}.product-form{border:1px solid var(--line);border-radius:15px;padding:14px;margin:12px 0}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fcfcfb;font:inherit;font-size:14px;direction:rtl;text-align:right}.field textarea{min-height:72px;resize:vertical}.field input[type=file]{font-size:12px}.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.checkline{display:flex;align-items:center;gap:9px;font-size:13px;margin:12px 0}.checkline input{width:18px;height:18px}.product-row{display:flex;gap:10px;align-items:center;border:1px solid var(--line);padding:10px;border-radius:13px;margin:8px 0}.product-row img{width:58px;height:58px;object-fit:cover;border-radius:10px;background:#eee}.product-row .info{flex:1;min-width:0;font-size:12px;line-height:1.8}.product-row .actions{display:flex;flex-direction:column;gap:5px}.product-row button{border:0;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:800;background:#f2f1ee}.product-row button.del{background:#fff0ef;color:#b22}.form-actions{display:flex;gap:8px}.form-actions button{flex:1}.preview{max-width:100px;max-height:100px;object-fit:cover;border-radius:12px;display:none;margin-top:8px}
-</style>
-</head>
-<body>
-<div class="top">چار<span>چیز</span> | مدیریت</div>
-<main class="wrap">
-  <section class="card" id="login-card">
-    <div class="logo">🍕</div>
-    <h1>ورود مدیر چارچیز</h1>
-    <p class="sub">شماره موبایل خودت را وارد کن تا درخواست کد ورود برای مدیر اصلی ارسال شود.</p>
-    <div class="step active" id="step-phone">
-      <div class="field">
-        <label for="phone">شماره موبایل</label>
-        <input id="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="13" placeholder="09123456789">
-      </div>
-      <button class="btn" id="request-btn" type="button">درخواست کد ورود</button>
-    </div>
-    <div class="step" id="step-code">
-      <div class="field">
-        <label for="code">کد شش‌رقمی</label>
-        <input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="کدی که مدیر برایت فرستاده">
-      </div>
-      <button class="btn" id="verify-btn" type="button">تأیید کد و ورود</button>
-      <button class="btn secondary" id="change-phone" type="button">تغییر شماره</button>
-      <p class="hint">کد فقط ۵ دقیقه اعتبار دارد. اگر مدیر اصلی کد را برایت نفرستاده، درخواست ورود را ادامه نده.</p>
-    </div>
-    <p class="small">چارچیز • اپلیکیشن مدیریت</p>
-  </section>
-
-  <section class="card dashboard" id="dashboard">
-    <div class="logo">🍕</div>
-    <h1>ورود موفق بود</h1>
-    <div class="welcome" id="welcome"></div>
-    <div class="tabs"><button type="button" class="active" data-tab="products-panel">مدیریت محصولات</button><button type="button" data-tab="orders-panel">سفارش‌ها</button></div>
-    <section class="panel active" id="products-panel">
-      <div class="orders-head"><h2>محصولات منو</h2><button class="refresh" id="refresh-products" type="button">به‌روزرسانی</button></div>
-      <form class="product-form" id="product-form">
-        <h3 id="form-title" style="margin:0 0 12px;font-size:15px">افزودن محصول جدید</h3>
-        <input type="hidden" id="product-id">
-        <div class="field"><label for="product-name">نام محصول</label><input id="product-name" required maxlength="100" placeholder="مثلاً چیزبرگر"></div>
-        <div class="field"><label for="product-category">دسته‌بندی</label><select id="product-category"><option>🍔 برگرها</option><option>🥪 ساندویچ‌ها</option><option>🍗 سوخاری‌ها</option><option>🍕 پیتزاها</option><option>🥤 نوشیدنی‌ها</option><option>🍟 پیش‌غذاها</option></select></div>
-        <div class="field"><label for="product-description">توضیحات محصول</label><textarea id="product-description" placeholder="توضیح کوتاه برای مشتری"></textarea></div>
-        <div class="field"><label for="product-contents">محتویات محصول</label><textarea id="product-contents" placeholder="مثلاً گوشت، پنیر، قارچ و سس"></textarea></div>
-        <div class="field" id="single-price-wrap"><label for="product-price">قیمت (تومان)</label><input id="product-price" type="number" min="0" inputmode="numeric" value="0"></div>
-        <div id="pizza-prices-wrap" style="display:none"><label style="font-size:12px;font-weight:800">قیمت سایزهای پیتزا (تومان)</label><div class="price-grid"><div class="field"><label>کوچک</label><input id="price-small" type="number" min="0" inputmode="numeric"></div><div class="field"><label>متوسط</label><input id="price-medium" type="number" min="0" inputmode="numeric"></div><div class="field"><label>بزرگ</label><input id="price-large" type="number" min="0" inputmode="numeric"></div><div class="field"><label>نیم‌متری</label><input id="price-half" type="number" min="0" inputmode="numeric"></div></div></div>
-        <div class="field"><label for="product-image">عکس محصول از گالری گوشی</label><input id="product-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><img id="image-preview" class="preview" alt="پیش‌نمایش عکس"></div>
-        <div class="field"><label for="product-sort">ترتیب نمایش</label><input id="product-sort" type="number" min="0" value="0" inputmode="numeric"></div>
-        <label class="checkline"><input id="product-active" type="checkbox" checked> محصول در منوی مشتری نمایش داده شود</label>
-        <div class="form-actions"><button class="btn" id="save-product" type="submit">ذخیره محصول</button><button class="btn secondary" id="reset-product" type="button">پاک کردن فرم</button></div>
-      </form>
-      <div class="orders-head"><h2>فهرست محصولات</h2></div><div id="products-list"><div class="loading">در حال دریافت محصولات...</div></div>
-    </section>
-    <section class="panel" id="orders-panel">
-      <div class="orders-head"><h2>سفارش‌های ثبت‌شده</h2><button class="refresh" id="refresh-btn" type="button">به‌روزرسانی</button></div>
-      <div id="orders-list"><div class="loading">در حال دریافت سفارش‌ها...</div></div>
-    </section>
-    <button class="btn secondary" id="logout-btn" type="button">خروج از حساب مدیریت</button>
-  </section>
-</main>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#171717"><title>چارچیز | مدیریت سفارش‌ها</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');:root{--red:#e3322b;--dark:#171717;--bg:#f7f6f3;--line:#eceae6;--muted:#888}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--dark);font-family:Vazirmatn,Tahoma,sans-serif;padding-bottom:85px}button,input,select{font:inherit}button{cursor:pointer}.top{background:#111;color:#fff;padding:15px;text-align:center;font-size:19px;font-weight:900}.top span{color:#ff625b}.wrap{max-width:760px;margin:20px auto;padding:0 13px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px}.logo{text-align:center;font-size:30px}.h1{text-align:center;font-size:21px;margin:4px 0}.sub{text-align:center;color:#888;font-size:12px;line-height:1.8}.field{margin:12px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff}.btn{border:0;border-radius:11px;padding:12px 15px;background:var(--red);color:#fff;font-weight:800}.btn:disabled{opacity:.55}.btn.gray{background:#f1f0ed;color:#333}.btn.full{width:100%}.hidden{display:none!important}.tabs{display:flex;gap:7px;overflow:auto;margin:14px 0}.tabs button{white-space:nowrap;border:0;border-radius:10px;padding:10px 13px;background:#f1f0ed;font-size:12px;font-weight:800}.tabs button.active{background:#171717;color:#fff}.order{border:1px solid var(--line);border-radius:15px;padding:14px;margin:11px 0;background:#fff}.order-head{display:flex;justify-content:space-between;gap:8px;font-weight:900;font-size:13px}.meta{font-size:11px;color:#777;line-height:2;margin:8px 0;overflow-wrap:anywhere}.items{background:#faf9f7;border-radius:10px;padding:10px;font-size:12px;line-height:2;white-space:pre-wrap}.total{display:flex;justify-content:space-between;font-weight:900;font-size:13px;margin:10px 0}.prep{background:#fff8e9;border:1px solid #f2e0b8;border-radius:11px;padding:11px;margin:11px 0}.prep label{font-size:12px;font-weight:800;display:block;margin-bottom:7px}.prep select,.status-select{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:white}.actions{display:flex;gap:8px;margin-top:10px}.actions>*{flex:1}.empty,.loading{padding:24px;text-align:center;color:#888;font-size:12px;line-height:2;background:#faf9f7;border-radius:12px}.section-title{font-size:17px;font-weight:900}.search-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.search-grid input,.search-grid select{min-width:0;width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:12px}.bottom{position:fixed;bottom:0;left:0;right:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:white;border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -5px 20px #0000000c}.bottom a,.bottom button{border:0;background:none;text-decoration:none;color:#777;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:800;padding:3px}.bottom span{font-size:19px}.bottom .active{color:var(--red)}.toast{position:fixed;bottom:90px;left:50%;transform:translate(-50%,15px);opacity:0;transition:.2s;background:#171717;color:white;border-radius:10px;padding:11px 15px;z-index:80;font-size:12px;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}@media(min-width:700px){.bottom{left:50%;right:auto;transform:translateX(-50%);width:min(760px,100%);border-radius:14px 14px 0 0}.wrap{margin-top:28px}}
+</style></head><body><div class="top">چار<span>چیز</span> | مدیریت</div><main class="wrap">
+<section id="login" class="card"><div class="logo">🍕</div><h1 class="h1">ورود مدیر</h1><p class="sub">شماره موبایل را وارد کن؛ کد ورود برای مدیر اصلی ارسال می‌شود.</p><div id="phone-step"><div class="field"><label>شماره موبایل</label><input id="phone" inputmode="tel" placeholder="09123456789" maxlength="13"></div><button class="btn full" id="request">درخواست کد ورود</button></div><div id="code-step" class="hidden"><div class="field"><label>کد شش‌رقمی</label><input id="code" inputmode="numeric" maxlength="6"></div><button class="btn full" id="verify">تأیید و ورود</button><button class="btn gray full" id="back" style="margin-top:8px">تغییر شماره</button></div></section>
+<section id="app" class="hidden"><section class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div><div class="section-title">مدیریت سفارش‌ها</div><div class="sub" id="welcome" style="text-align:right;margin:0"></div></div><button class="btn gray" id="refresh">↻ تازه‌سازی</button></div><div class="tabs"><button class="active" data-tab="new">سفارش‌های جدید</button><button data-tab="reviewed">بررسی‌شده‌ها</button><button data-tab="done">تکمیل‌شده‌ها</button></div><div id="orders"><div class="loading">در حال دریافت سفارش‌ها...</div></div></section>
+<section class="card"><div class="section-title">تنظیمات</div><p class="sub" style="text-align:right">تاریخچه سفارش‌ها در بخش تکمیل‌شده‌ها نگهداری می‌شود و سفارش‌ها از پایگاه داده حذف نمی‌شوند.</p><button class="btn gray full" id="history-shortcut">مشاهده تاریخچه سفارشات</button>
+<div id="history-panel" class="hidden" style="margin-top:14px"><div class="section-title">جست‌وجو در تاریخچه</div><div class="search-grid" style="margin:10px 0"><input id="history-query" placeholder="شماره سفارش یا موبایل"><input id="history-date" type="date"><select id="history-status"><option value="all">همه وضعیت‌ها</option><option value="completed">تحویل‌شده</option><option value="cancelled">لغوشده</option></select><button class="btn gray" id="history-search">جست‌وجو</button></div><div id="history-results"></div></div>
+<button class="btn gray full" id="logout" style="margin-top:8px">خروج از حساب مدیریت</button></section></section></main>
+<nav class="bottom"><a class="active" href="manager.html"><span>▤</span>سفارش‌ها</a><a href="manager-products.html"><span>☷</span>محصولات</a><a href="manager-products.html#add"><span>＋</span>افزودن محصول</a><a href="#settings" id="settings-link"><span>⚙</span>تنظیمات</a></nav><div class="toast" id="toast"></div>
 <script>
-"use strict";
-const API="https://charcheez-bot.asdzadhamyr077.workers.dev";
-const $=id=>document.getElementById(id);
-let pendingPhone="";
-let managerToken=localStorage.getItem("charcheez_manager_session")||"";
-function toast(message){const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),3500)}
-function normalizePhone(value){let p=String(value||"").replace(/\D/g,"");if(p.startsWith("98")&&p.length===12)p="0"+p.slice(2);if(p.length===10&&p.startsWith("9"))p="0"+p;return p}
-async function api(path,data={},method="POST"){
-  const headers={"Content-Type":"application/json"};
-  if(managerToken)headers.Authorization="Bearer "+managerToken;
-  const response=await fetch(API+path,{method,headers,body:method==="GET"?undefined:JSON.stringify(data)});
-  let result={};try{result=await response.json()}catch{}
-  if(!response.ok||result.ok!==true)throw new Error(errorText(result.error));
-  return result;
-}
-function errorText(code){
-  const messages={invalid_phone:"شماره موبایل معتبر نیست.",please_wait:"برای درخواست کد جدید کمی صبر کن.",otp_expired:"کد منقضی شده؛ دوباره درخواست بده.",wrong_code:"کد واردشده اشتباه است.",too_many_attempts:"تعداد تلاش‌ها بیش از حد مجاز است.",unauthorized:"نشست ورود معتبر نیست.",server_configuration_missing:"تنظیمات سرور کامل نیست.",server_error:"خطای سرور؛ کمی بعد دوباره تلاش کن."};
-  return messages[code]||"ارتباط با سرور برقرار نشد.";
-}
-function showDashboard(phone){
-  $("login-card").style.display="none";
-  $("dashboard").classList.add("active");
-  $("welcome").textContent="مدیر واردشده: "+phone;
-  loadOrders();
-  loadProducts();
-}
-function showLogin(){
-  $("login-card").style.display="block";
-  $("dashboard").classList.remove("active");
-  $("step-phone").classList.add("active");
-  $("step-code").classList.remove("active");
-}
-async function requestCode(){
-  const phone=normalizePhone($("phone").value),button=$("request-btn");
-  if(!/^09\d{9}$/.test(phone)){toast("شماره موبایل را به شکل 09123456789 وارد کن.");return}
-  button.disabled=true;button.textContent="در حال ارسال درخواست...";
-  try{
-    await api("/manager/auth/request",{phone});
-    pendingPhone=phone;
-    $("step-phone").classList.remove("active");
-    $("step-code").classList.add("active");
-    toast("درخواست کد به تلگرام مدیر اصلی ارسال شد.");
-  }catch(error){toast(error.message)}
-  finally{button.disabled=false;button.textContent="درخواست کد ورود"}
-}
-async function verifyCode(){
-  const code=$("code").value.replace(/\D/g,""),button=$("verify-btn");
-  if(!/^\d{6}$/.test(code)){toast("کد باید شش رقم باشد.");return}
-  button.disabled=true;button.textContent="در حال بررسی...";
-  try{
-    const result=await api("/manager/auth/verify",{phone:pendingPhone,code});
-    managerToken=result.token||"";
-    if(!managerToken)throw new Error("توکن ورود از سرور دریافت نشد.");
-    localStorage.setItem("charcheez_manager_session",managerToken);
-    showDashboard(result.user?.phone||pendingPhone);
-  }catch(error){toast(error.message)}
-  finally{button.disabled=false;button.textContent="تأیید کد و ورود"}
-}
-async function restore(){
-  if(!managerToken){showLogin();return}
-  try{const result=await api("/manager/auth/me",{});showDashboard(result.user?.phone||"مدیر")}
-  catch{managerToken="";localStorage.removeItem("charcheez_manager_session");showLogin()}
-}
-const statusNames={new:"جدید",confirmed:"تأیید شده",preparing:"در حال آماده‌سازی",sent:"ارسال شده",completed:"تکمیل شده",cancelled:"لغو شده"};
-function safeText(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
-function renderOrder(order){
-  let items=[];try{items=JSON.parse(order.items||"[]")}catch{}
-  const lines=items.map(item=>`${safeText(item.name)} × ${Number(item.quantity)||1} — ${new Intl.NumberFormat("fa-IR").format(Number(item.subtotal)||0)} تومان`).join("\n");
-  const options=Object.entries(statusNames).map(([value,label])=>`<option value="${value}" ${order.status===value?"selected":""}>${label}</option>`).join("");
-  return `<article class="order" data-id="${Number(order.id)}"><div class="order-top"><span>سفارش #${Number(order.id)}</span><span>${safeText(statusNames[order.status]||order.status)}</span></div><div class="order-meta">مشتری: ${safeText(order.customer_name)} | ${safeText(order.customer_phone)}<br>آدرس: ${safeText(order.address)}<br>زمان: ${safeText(order.order_date||order.created_at)}${order.note?`<br>توضیحات: ${safeText(order.note)}`:""}</div><div class="order-items">${lines||"اقلام ثبت نشده"}</div><div class="order-bottom"><span>مبلغ کل</span><span>${new Intl.NumberFormat("fa-IR").format(Number(order.total)||0)} تومان</span></div><div class="status-row"><select aria-label="وضعیت سفارش">${options}</select><button type="button" class="save-status">ثبت وضعیت</button></div></article>`;
-}
-async function loadOrders(){
-  const list=$("orders-list");list.innerHTML='<div class="loading">در حال دریافت سفارش‌ها...</div>';
-  try{
-    const result=await api("/manager/orders",{});
-    if(!result.orders||!result.orders.length){list.innerHTML='<div class="empty">هنوز سفارشی ثبت نشده است.</div>';return}
-    list.innerHTML=result.orders.map(renderOrder).join("");
-    list.querySelectorAll(".save-status").forEach(button=>button.addEventListener("click",async()=>{
-      const card=button.closest(".order"),id=Number(card.dataset.id),status=card.querySelector("select").value;
-      button.disabled=true;button.textContent="...";
-      try{await api("/manager/orders/status",{id,status});toast("وضعیت سفارش به‌روزرسانی شد.");await loadOrders()}
-      catch(error){toast(error.message);button.disabled=false;button.textContent="ثبت وضعیت"}
-    }));
-  }catch(error){list.innerHTML=`<div class="empty">${safeText(error.message)}<br>برای تلاش دوباره، به‌روزرسانی را بزن.</div>`}
-}
-const pizzaSizes=["کوچک","متوسط","بزرگ","نیم‌متری"];
-function togglePizzaFields(){const pizza=$("product-category").value.includes("پیتزا");$("pizza-prices-wrap").style.display=pizza?"block":"none";$("single-price-wrap").style.display=pizza?"none":"block"}
-function resetProductForm(){$("product-form").reset();$("product-id").value="";$("form-title").textContent="افزودن محصول جدید";$("product-active").checked=true;$("product-sort").value="0";$("product-price").value="0";$("image-preview").style.display="none";$("image-preview").src="";$("product-image").value="";togglePizzaFields()}
-function renderProduct(p){const prices=Array.isArray(p.prices)?p.prices:[];const priceText=prices.length?pizzaSizes.map((z,i)=>z+": "+new Intl.NumberFormat("fa-IR").format(prices[i]||0)).join(" | "):new Intl.NumberFormat("fa-IR").format(Number(p.price)||0)+" تومان";return `<article class="product-row"><img src="${safeText(p.image_url||"")}" onerror="this.style.display='none'" alt=""><div class="info"><b>${safeText(p.name)}</b><br>${safeText(p.category)}<br>${priceText}<br>${Number(p.active)?"فعال":"غیرفعال"}</div><div class="actions"><button type="button" class="edit-product" data-id="${Number(p.id)}">ویرایش</button><button type="button" class="del" data-id="${Number(p.id)}">حذف</button></div></article>`}
-let productCache=[];
-async function loadProducts(){const list=$("products-list");list.innerHTML='<div class="loading">در حال دریافت محصولات...</div>';try{const r=await api("/manager/products",{},"GET");productCache=r.products||[];list.innerHTML=productCache.length?productCache.map(renderProduct).join(""):'<div class="empty">محصولی ثبت نشده است.</div>';list.querySelectorAll(".edit-product").forEach(b=>b.addEventListener("click",()=>editProduct(Number(b.dataset.id))));list.querySelectorAll(".del").forEach(b=>b.addEventListener("click",()=>deleteProduct(Number(b.dataset.id))))}catch(e){list.innerHTML=`<div class="empty">${safeText(e.message)}</div>`}}
-function editProduct(id){const p=productCache.find(x=>Number(x.id)===id);if(!p)return;$("product-id").value=p.id;$("product-name").value=p.name||"";$("product-category").value=p.category||"🍔 برگرها";$("product-description").value=p.description||"";$("product-contents").value=p.contents||"";$("product-price").value=p.price||0;const a=Array.isArray(p.prices)?p.prices:[];["price-small","price-medium","price-large","price-half"].forEach((id,i)=>$(id).value=a[i]||0);$("product-sort").value=p.sort_order||0;$("product-active").checked=Number(p.active)===1;$("image-preview").src=p.image_url||"";$("image-preview").style.display=p.image_url?"block":"none";$("form-title").textContent="ویرایش محصول: "+p.name;$("product-form").scrollIntoView({behavior:"smooth",block:"start"});togglePizzaFields()}
-async function deleteProduct(id){if(!confirm("این محصول برای همیشه حذف شود؟"))return;try{await api("/manager/products/delete",{id});toast("محصول حذف شد.");await loadProducts()}catch(e){toast(e.message)}}
-function readFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file)})}
-$("product-category").addEventListener("change",togglePizzaFields);
-$("product-image").addEventListener("change",async()=>{const f=$("product-image").files[0];if(!f)return;if(f.size>4*1024*1024){toast("حجم عکس باید کمتر از ۴ مگابایت باشد.");$("product-image").value="";return}const data=await readFile(f);$("image-preview").src=data;$("image-preview").style.display="block"});
-$("reset-product").addEventListener("click",resetProductForm);
-$("refresh-products").addEventListener("click",loadProducts);
-$("product-form").addEventListener("submit",async e=>{e.preventDefault();const button=$("save-product");button.disabled=true;button.textContent="در حال ذخیره...";try{let imageUrl=$("image-preview").src.startsWith("data:")?"":( $("image-preview").src||"");let imagePath="";const file=$("product-image").files[0];if(file){const dataUrl=await readFile(file);const up=await api("/manager/products/image",{filename:file.name,data_url:dataUrl});imageUrl=up.image_url;imagePath=up.image_path}else{const old=productCache.find(p=>Number(p.id)===Number($("product-id").value));imagePath=old?.image_path||""}const pizza=$("product-category").value.includes("پیتزا");const payload={id:Number($("product-id").value)||0,name:$("product-name").value.trim(),category:$("product-category").value,description:$("product-description").value,contents:$("product-contents").value,price:pizza?Number($("price-small").value)||0:Number($("product-price").value)||0,prices:pizza?["price-small","price-medium","price-large","price-half"].map(id=>Number($(id).value)||0):null,image_url:imageUrl,image_path:imagePath,active:$("product-active").checked?1:0,sort_order:Number($("product-sort").value)||0};await api("/manager/products/save",payload);toast("محصول با موفقیت ذخیره شد.");resetProductForm();await loadProducts()}catch(err){toast(err.message)}finally{button.disabled=false;button.textContent="ذخیره محصول"}});
-document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab));if(b.dataset.tab==="orders-panel")loadOrders();else loadProducts()}));
-async function logout(){
-  try{await api("/manager/auth/logout",{})}catch{}
-  managerToken="";localStorage.removeItem("charcheez_manager_session");
-  $("phone").value="";$("code").value="";pendingPhone="";showLogin();toast("از حساب مدیریت خارج شدی.");
-}
-$("request-btn").addEventListener("click",requestCode);
-$("verify-btn").addEventListener("click",verifyCode);
-$("change-phone").addEventListener("click",()=>{$("step-code").classList.remove("active");$("step-phone").classList.add("active")});
-$("logout-btn").addEventListener("click",logout);
-$("refresh-btn").addEventListener("click",loadOrders);
-restore();
-</script>
-</body>
-</html>
+'use strict';const API='https://charcheez-bot.asdzadhamyr077.workers.dev';const $=id=>document.getElementById(id);let token=localStorage.getItem('charcheez_manager_session')||'',phone='',orders=[],tab='new';
+function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),3200)}
+function norm(s){let p=String(s||'').replace(/\D/g,'');if(p.startsWith('98')&&p.length===12)p='0'+p.slice(2);if(p.length===10&&p[0]==='9')p='0'+p;return p}
+async function api(path,data={},method='POST'){const headers={'Content-Type':'application/json'};if(token)headers.Authorization='Bearer '+token;const res=await fetch(API+path,{method,headers,body:method==='GET'?undefined:JSON.stringify(data)});let j={};try{j=await res.json()}catch{}if(!res.ok||j.ok!==true)throw new Error(j.error||'ارتباط با سرور برقرار نشد.');return j}
+function loginView(){$('login').classList.remove('hidden');$('app').classList.add('hidden')}
+function appView(user){$('login').classList.add('hidden');$('app').classList.remove('hidden');$('welcome').textContent='مدیر: '+(user||phone||'');loadOrders()}
+async function requestOtp(){const p=norm($('phone').value);if(!/^09\d{9}$/.test(p)){toast('شماره موبایل معتبر نیست.');return}const b=$('request');b.disabled=true;try{await api('/manager/auth/request',{phone:p});phone=p;$('phone-step').classList.add('hidden');$('code-step').classList.remove('hidden');toast('درخواست کد ارسال شد.')}catch(e){toast(e.message)}finally{b.disabled=false}}
+async function verifyOtp(){const code=$('code').value.trim();if(!/^\d{6}$/.test(code)){toast('کد باید شش رقم باشد.');return}const b=$('verify');b.disabled=true;try{const r=await api('/manager/auth/verify',{phone,code});token=r.token||'';if(!token)throw new Error('توکن ورود دریافت نشد.');localStorage.setItem('charcheez_manager_session',token);appView(r.user?.phone||phone)}catch(e){toast(e.message)}finally{b.disabled=false}}
+async function restore(){if(!token){loginView();return}try{const r=await api('/manager/auth/me',{},'GET');appView(r.user?.phone||'مدیر')}catch{token='';localStorage.removeItem('charcheez_manager_session');loginView()}}
+const labels={new:'در انتظار تأیید',confirmed:'تأیید شده',preparing:'در حال آماده‌سازی',sent:'ارسال شده',completed:'تحویل‌شده',cancelled:'لغوشده'};const times=[10,15,20,30,45,60];
+function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function money(n){return (Number(n)||0).toLocaleString('fa-IR')+' تومان'}
+function visibleOrders(){if(tab==='new')return orders.filter(o=>(o.status||'new')==='new');if(tab==='reviewed')return orders.filter(o=>['confirmed','preparing','sent'].includes(o.status));return orders.filter(o=>['completed','cancelled'].includes(o.status))}
+function renderOrder(o){let items=[];try{items=typeof o.items==='string'?JSON.parse(o.items):o.items||[]}catch{}const lines=items.map(x=>`${safe(x.name||x.title)} × ${Number(x.quantity||1).toLocaleString('fa-IR')} — ${money(x.subtotal||x.price)}`).join('\n');const isNew=(o.status||'new')==='new';const statusOptions=Object.entries(labels).map(([v,l])=>`<option value="${v}" ${o.status===v?'selected':''}>${l}</option>`).join('');return `<article class="order" data-id="${Number(o.id)}"><div class="order-head"><span>سفارش #${Number(o.id)}</span><span>${labels[o.status]||'جدید'}</span></div><div class="meta">نام: ${safe(o.customer_name||'—')}<br>موبایل: ${safe(o.customer_phone||'—')}<br>آدرس: ${safe(o.address||'—')}<br>زمان ثبت: ${safe(o.order_date||o.created_at||'—')} ${o.note?'<br>توضیحات: '+safe(o.note):''}</div><div class="items">${lines||'اقلام ثبت نشده'}</div><div class="total"><span>مبلغ سفارش</span><span>${money(o.total)}</span></div>${Number(o.estimated_prep_minutes)>0?`<div class="meta">زمان آماده‌سازی ثبت‌شده: ${Number(o.estimated_prep_minutes)} دقیقه</div>`:''}${isNew?`<div class="prep"><label>زمان آماده‌سازی (الزامی برای تأیید)</label><select class="prep-select"><option value="">انتخاب زمان</option>${times.map(t=>`<option value="${t}">${t} دقیقه</option>`).join('')}</select><button class="btn full approve" style="margin-top:9px">تأیید سفارش و ثبت زمان</button></div>`:`<div class="field"><label>تغییر وضعیت سفارش</label><select class="status-select">${statusOptions}</select></div><button class="btn full save-status">ثبت وضعیت جدید</button>`}</article>`}
+function renderOrders(){const list=$('orders'),rows=visibleOrders();if(!rows.length){list.innerHTML='<div class="empty">در این بخش سفارشی وجود ندارد.</div>';return}list.innerHTML=rows.map(renderOrder).join('');list.querySelectorAll('.approve').forEach(b=>b.onclick=async()=>{const card=b.closest('.order'),id=Number(card.dataset.id),minutes=Number(card.querySelector('.prep-select').value);if(!times.includes(minutes)){toast('ابتدا زمان آماده‌سازی را انتخاب کن.');return}b.disabled=true;try{await api('/manager/orders/prep-time',{id,minutes});await api('/manager/orders/status',{id,status:'confirmed'});toast('سفارش تأیید شد و زمان برای مشتری ثبت شد.');await loadOrders()}catch(e){toast(e.message);b.disabled=false}});list.querySelectorAll('.save-status').forEach(b=>b.onclick=async()=>{const card=b.closest('.order'),id=Number(card.dataset.id),status=card.querySelector('.status-select').value;b.disabled=true;try{await api('/manager/orders/status',{id,status});toast('وضعیت سفارش به‌روزرسانی شد.');await loadOrders()}catch(e){toast(e.message);b.disabled=false}})}
+async function loadOrders(){if(!token)return;$('orders').innerHTML='<div class="loading">در حال دریافت سفارش‌ها...</div>';try{const r=await api('/manager/orders',{},'GET');orders=Array.isArray(r.orders)?r.orders:[];renderOrders()}catch(e){$('orders').innerHTML=`<div class="empty">${safe(e.message)}</div>`}}
+function renderHistory(){const q=$('history-query').value.trim().toLowerCase(),date=$('history-date').value,status=$('history-status').value;let rows=orders.filter(o=>['completed','cancelled'].includes(o.status));if(q)rows=rows.filter(o=>String(o.id).includes(q)||String(o.customer_phone||'').toLowerCase().includes(q));if(date)rows=rows.filter(o=>{const raw=String(o.order_date||o.created_at||'');return raw.includes(date)||raw.includes(date.split('-').reverse().join('/'))});if(status!=='all')rows=rows.filter(o=>o.status===status);$('history-results').innerHTML=rows.length?rows.map(renderOrder).join(''):'<div class=\"empty\">سفارشی با این مشخصات پیدا نشد.</div>';}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));renderOrders()});$('request').onclick=requestOtp;$('verify').onclick=verifyOtp;$('back').onclick=()=>{$('code-step').classList.add('hidden');$('phone-step').classList.remove('hidden')};$('refresh').onclick=loadOrders;$('history-shortcut').onclick=()=>{$('history-panel').classList.toggle('hidden');renderHistory()};$('history-search').onclick=renderHistory;$('settings-link').onclick=e=>{e.preventDefault();document.querySelectorAll('.bottom a').forEach(x=>x.classList.remove('active'));e.currentTarget.classList.add('active');document.querySelector('.card:last-child').scrollIntoView({behavior:'smooth'})};$('logout').onclick=async()=>{try{await api('/manager/auth/logout',{})}catch{}token='';localStorage.removeItem('charcheez_manager_session');loginView();toast('از حساب خارج شدی.')};restore();
+</script></body></html>

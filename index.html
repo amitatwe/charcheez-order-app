@@ -51,6 +51,59 @@
 #page-cart{padding-top:8px}
 #page-orders,#page-account{padding-top:18px}
 .mobile-bottom-nav a{min-width:0;text-align:center}
+
+/* CHARCHIZ motion refresh */
+:root{--red:#e3322b;--dark:#151515;--cream:#f8f7f5;--line:#ebe8e4}
+body{background:var(--cream)}
+.top-strip{background:linear-gradient(90deg,#111,#292020,#111);background-size:200% 100%;animation:stripFlow 12s ease infinite}
+@keyframes stripFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+header{transition:box-shadow .25s ease,background .25s ease;box-shadow:0 3px 18px #17171708}
+.brand-mark{background:linear-gradient(145deg,#242424,#090909);box-shadow:0 5px 15px #e3322b30;animation:brandFloat 4s ease-in-out infinite}
+@keyframes brandFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-3deg)}}
+.brand-name span{display:inline-block;animation:brandPulse 3.5s ease-in-out infinite}
+@keyframes brandPulse{0%,100%{text-shadow:0 0 0 #e3322b00}50%{text-shadow:0 0 13px #e3322b55}}
+.cart-nav,.primary-btn,.add-btn,.submit-btn{position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.cart-nav:after,.primary-btn:after,.add-btn:after,.submit-btn:after{content:"";position:absolute;top:-80%;left:-45%;width:35%;height:260%;transform:rotate(25deg);background:#ffffff38;transition:left .55s ease}
+.cart-nav:hover:after,.primary-btn:hover:after,.add-btn:hover:after,.submit-btn:hover:after{left:130%}
+.cart-nav:hover,.primary-btn:hover,.submit-btn:hover{transform:translateY(-2px);box-shadow:0 9px 22px #e3322b40}
+.hero{isolation:isolate;box-shadow:0 18px 42px #17171720;animation:heroEnter .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes heroEnter{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.hero:before{animation:heroZoom 20s ease-in-out infinite alternate}
+@keyframes heroZoom{from{transform:scale(1)}to{transform:scale(1.075)}}
+.hero:after{content:"";position:absolute;z-index:0;width:280px;height:280px;border-radius:50%;background:#e3322b38;filter:blur(75px);left:-90px;bottom:-150px;pointer-events:none;animation:redGlow 7s ease-in-out infinite alternate}
+@keyframes redGlow{from{opacity:.45;transform:translate(0,0) scale(.85)}to{opacity:.9;transform:translate(55px,-35px) scale(1.2)}}
+.hero-content{z-index:1;animation:contentEnter .9s .12s both}
+@keyframes contentEnter{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{box-shadow:0 0 0 0 #e3322b45;animation:badgePulse 3s infinite}
+@keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 #e3322b00}50%{box-shadow:0 0 0 7px #e3322b12}}
+.benefit{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;animation:cardEnter .65s both}
+.benefit:nth-child(2){animation-delay:.1s}.benefit:nth-child(3){animation-delay:.2s}
+.benefit:hover{transform:translateY(-5px);border-color:#f0b7b3;box-shadow:0 12px 26px #1717170d}
+.benefit-icon{transition:transform .25s ease;background:linear-gradient(145deg,#fff0ef,#ffe2df)}
+.benefit:hover .benefit-icon{transform:rotate(-8deg) scale(1.1)}
+@keyframes cardEnter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.section-head h2{position:relative}
+.section-head h2:after{content:"";display:block;width:42px;height:3px;border-radius:5px;background:var(--red);margin-top:7px;transition:width .3s ease}
+.section-head:hover h2:after{width:76px}
+.category-chip{transition:all .22s ease}
+.category-chip:hover{border-color:var(--red);color:var(--red);transform:translateY(-2px)}
+.category-chip.active{box-shadow:0 5px 14px #17171722}
+.product-card{box-shadow:0 4px 15px #17171707;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,border-color .28s ease;animation:cardEnter .55s both}
+.product-card:hover{transform:translateY(-7px);border-color:#f0b7b3;box-shadow:0 16px 30px #17171713}
+.product-photo img{transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .3s ease}
+.product-card:hover .product-photo img{transform:scale(1.075);filter:saturate(1.08)}
+.photo-tag{box-shadow:0 3px 10px #0002}
+.add-btn:hover{background:var(--red);transform:translateY(-1px);box-shadow:0 6px 15px #e3322b35}
+.panel,.order-card,.tracking-panel{transition:box-shadow .25s ease,border-color .25s ease}
+.panel:focus-within{border-color:#efb5b1;box-shadow:0 10px 28px #1717170a}
+.mobile-bottom-nav{backdrop-filter:blur(16px);background:#fffffff2;box-shadow:0 -8px 28px #17171712}
+.mobile-bottom-nav a{transition:color .2s ease,transform .2s ease}
+.mobile-bottom-nav a.active{transform:translateY(-2px)}
+.mobile-bottom-nav a.active span{filter:drop-shadow(0 3px 5px #e3322b35)}
+.toast.show{box-shadow:0 10px 28px #0003}
+@media(hover:none){.product-card:hover,.benefit:hover{transform:none;box-shadow:0 4px 15px #17171707}.product-card:active,.benefit:active{transform:scale(.985)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
 </style></head><body>
 <div class="top-strip">سفارش تازه و خوشمزه از <b>چارچیز</b>؛ انتخاب کن، سفارش بده، لذت ببر ❤️</div><header><nav class="nav"><a class="brand" href="#"><div class="brand-mark">🍕</div><div><div class="brand-name">چار<span>چیز</span></div><small>FAST FOOD CHARCHIZ</small></div></a><div class="nav-links"><a href="#page-menu" data-page="menu">منوی غذا</a><a href="#page-home" data-page="home">چرا چارچیز؟</a><a href="#page-cart" data-page="cart">ثبت سفارش</a><a href="#page-orders" data-page="orders">سفارش‌های من</a><a href="https://www.instagram.com/4__chees/" target="_blank" rel="noopener noreferrer">اینستاگرام</a></div><button class="cart-nav" type="button" onclick="showPage('cart')">🛒 سبد خرید <span class="cart-count" id="cart-count">۰</span></button></nav></header>
 <main class="wrap"><div class="app-page active" id="page-home"><section class="hero" id="home"><div class="hero-content"><span class="eyebrow">🔥 تازه، خوشمزه، مخصوص تو</span><h1>یه انتخاب خوشمزه،<br><span>یه حال خوب واقعی!</span></h1><p>از برگرهای جذاب تا پیتزاهای پرملات و سوخاری‌های ترد؛ غذای مورد علاقه‌ات رو از چارچیز انتخاب کن.</p><a class="primary-btn" href="#page-menu" onclick="showPage('menu');return false">دیدن منوی غذا ←</a><span class="hero-note">❤️ چارچیز؛ همیشه خوشمزه</span></div></section>
@@ -166,7 +219,7 @@ function renderOrderCard(order){
     ${Number(order.estimated_prep_minutes)>0 && !cancelled ? `<div class="order-prep-time">⏱ زمان آماده‌سازی اعلام‌شده: <b>${Number(order.estimated_prep_minutes).toLocaleString("fa-IR")} دقیقه</b></div>` : ""}
     ${items?`<div class="order-items"><b>اقلام سفارش:</b> ${items}</div>`:""}
     <div class="order-total"><span>مبلغ سفارش</span><strong>${money(total)}</strong></div>
-    ${authToken?`<div class="order-actions"><button class="order-action-btn" type="button" onclick="openSupport(${Number(order.id)})">${supportTickets.some(t=>Number(t.order_id)===Number(order.id))?"پیگیری پشتیبانی":"پشتیبانی این سفارش"}</button>${status==="preparing"?`<button class="order-action-btn cancel" type="button" onclick="cancelCustomerOrder(${Number(order.id)})">لغو سفارش</button>`:""}</div>`:""}
+    ${authToken?`<div class="order-actions"><button class="order-action-btn" type="button" onclick="openSupport(${Number(order.id)})">${supportTickets.some(t=>Number(t.order_id)===Number(order.id))?"پیگیری پشتیبانی":"پشتیبانی این سفارش"}</button>${status==="new"?`<button class="order-action-btn cancel" type="button" onclick="cancelCustomerOrder(${Number(order.id)})">لغو سفارش</button>`:""}</div>`:""}
   </article>`;
 }
 const supportStatusLabels={new:"جدید",in_progress:"در حال پیگیری",answered:"پاسخ داده‌شده"};
@@ -176,7 +229,7 @@ async function openSupport(orderId){if(!authToken){openAuth();return}activeSuppo
 async function loadSupportThread(ticketId){const r=await api("/my/support/"+ticketId,{},"GET");activeSupportTicketId=ticketId;const t=r.ticket||{};$ ("support-new").style.display="none";$ ("support-thread").style.display="block";$ ("support-status-label").textContent="وضعیت درخواست: "+(supportStatusLabels[t.status]||t.status||"جدید");const rows=Array.isArray(r.messages)?r.messages:[];$ ("support-messages").innerHTML=rows.map(m=>`<div class="support-message ${m.sender_role==="manager"?"manager":""}"><b>${m.sender_role==="manager"?"پاسخ چارچیز":"پیام شما"}</b><div>${escapeHTML(m.message)}</div><small>${escapeHTML(m.created_at||"")}</small></div>`).join("")||'<div class="tracking-empty">هنوز پیامی ثبت نشده است.</div>';}
 async function createSupportTicket(){const message=$("support-first-message").value.trim(),button=$("support-create-btn");if(!message){showToast("لطفاً توضیحات درخواست را بنویس.");return}button.disabled=true;try{const r=await api("/support/tickets",{order_id:activeSupportOrderId,topic:$ ("support-topic").value,message});await loadSupportTickets();await loadSupportThread(Number(r.ticket_id));showToast("درخواست پشتیبانی ثبت شد.");loadMyOrders()}catch(e){showToast(e.message)}finally{button.disabled=false}}
 async function sendSupportReply(){const message=$("support-reply-input").value.trim(),button=$("support-reply-btn");if(!message){showToast("پیامت رو بنویس.");return}button.disabled=true;try{await api("/support/reply",{ticket_id:activeSupportTicketId,message});$("support-reply-input").value="";await loadSupportThread(activeSupportTicketId);await loadSupportTickets();showToast("پیامت ارسال شد.")}catch(e){showToast(e.message)}finally{button.disabled=false}}
-async function cancelCustomerOrder(id){if(!confirm("فقط در وضعیت آماده‌سازی امکان لغو سفارش وجود دارد. از لغو این سفارش مطمئنی؟"))return;try{await api("/my/orders/cancel",{id});showToast("سفارش لغو شد.");await loadMyOrders()}catch(e){showToast(e.message==="order_not_cancellable"?"در وضعیت فعلی امکان لغو سفارش وجود ندارد.":e.message)}}
+async function cancelCustomerOrder(id){if(!confirm("فقط تا قبل از تأیید سفارش توسط مدیریت امکان لغو وجود دارد. از لغو این سفارش مطمئنی؟"))return;try{await api("/my/orders/cancel",{id});showToast("سفارش لغو شد.");await loadMyOrders()}catch(e){showToast(e.message==="order_not_cancellable"?"مدیریت سفارش را تأیید کرده و دیگر امکان لغو آن وجود ندارد.":e.message)}}
 
 async function loadMyOrders(){
   const list=$("my-orders-list"),button=$("refresh-orders-btn");

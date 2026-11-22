@@ -289,7 +289,7 @@ function renderOrderCard(order){
     ${Number(order.estimated_prep_minutes)>0&&!cancelled&&!completed?`<div class="order-prep-time">⏱ زمان آماده‌سازی اعلام‌شده: <b>${Number(order.estimated_prep_minutes).toLocaleString("fa-IR")} دقیقه</b></div>`:""}
     ${items?`<div class="order-items"><b>اقلام سفارش:</b> ${items}</div>`:""}<div class="order-total"><span>مبلغ سفارش</span><strong>${money(total)}</strong></div>
     ${renderOrderReviews(order)}
-    ${authToken?`<div class="order-actions"><button class="order-action-btn" type="button" onclick="openSupport(${Number(order.id)})">${supportTickets.some(t=>Number(t.order_id)===Number(order.id))?"پیگیری پشتیبانی":"پشتیبانی این سفارش"}</button>${status==="new"?`<button class="order-action-btn cancel" type="button" onclick="cancelCustomerOrder(${Number(order.id)})">لغو سفارش</button>`:""}</div>`:""}</article>`;
+    ${authToken&&!completed?`<div class="order-actions"><button class="order-action-btn" type="button" onclick="openSupport(${Number(order.id)})">${supportTickets.some(t=>Number(t.order_id)===Number(order.id))?"پیگیری پشتیبانی":"پشتیبانی این سفارش"}</button>${status==="new"?`<button class="order-action-btn cancel" type="button" onclick="cancelCustomerOrder(${Number(order.id)})">لغو سفارش</button>`:""}</div>`:""}</article>`;
 }
 const supportStatusLabels={new:"جدید",in_progress:"در حال پیگیری",answered:"پاسخ داده‌شده"};
 async function loadSupportTickets(){const r=await api("/my/support",{},"GET");supportTickets=Array.isArray(r.tickets)?r.tickets:[];}

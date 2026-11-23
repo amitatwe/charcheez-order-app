@@ -112,14 +112,29 @@ function normalizePhone(value){let p=String(value||"").replace(/\D/g,"");if(p.st
 async function api(path,data={},method="POST"){
   const headers={"Content-Type":"application/json"};
   if(managerToken)headers.Authorization="Bearer "+managerToken;
-  const response=await fetch(API+path,{method,headers,body:method==="GET"?undefined:JSON.stringify(data)});
-  let result={};try{result=await response.json()}catch{}
-  if(!response.ok||result.ok!==true)throw new Error(errorText(result.error));
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),45000);
+  let response;
+  try{
+    response=await fetch(API+path,{method,headers,body:method==="GET"?undefined:JSON.stringify(data),signal:controller.signal});
+  }catch(err){
+    if(err&&err.name==="AbortError")throw new Error("زمان پاسخ سرور تمام شد. اتصال اینترنت یا بخش آپلود GitHub را بررسی کن.");
+    throw new Error("ارتباط با سرور برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن.");
+  }finally{clearTimeout(timeout)}
+  let result={};
+  try{result=await response.json()}catch{}
+  if(!response.ok||result.ok!==true){
+    const message=errorText(result.error);
+    throw new Error(message+(response.status?" (کد "+response.status+")":""));
+  }
   return result;
 }
 function errorText(code){
-  const messages={invalid_phone:"شماره موبایل معتبر نیست.",please_wait:"برای درخواست کد جدید کمی صبر کن.",otp_expired:"کد منقضی شده؛ دوباره درخواست بده.",wrong_code:"کد واردشده اشتباه است.",too_many_attempts:"تعداد تلاش‌ها بیش از حد مجاز است.",unauthorized:"نشست ورود معتبر نیست.",server_configuration_missing:"تنظیمات سرور کامل نیست.",server_error:"خطای سرور؛ کمی بعد دوباره تلاش کن."};
-  return messages[code]||"ارتباط با سرور برقرار نشد.";
+  const messages={
+    invalid_phone:"شماره موبایل معتبر نیست.",please_wait:"برای درخواست کد جدید کمی صبر کن.",otp_expired:"کد منقضی شده؛ دوباره درخواست بده.",wrong_code:"کد واردشده اشتباه است.",too_many_attempts:"تعداد تلاش‌ها بیش از حد مجاز است.",unauthorized:"نشست ورود معتبر نیست؛ یک‌بار خارج شو و دوباره وارد شو.",server_configuration_missing:"تنظیمات سرور کامل نیست.",server_error:"خطای سرور؛ کمی بعد دوباره تلاش کن.",
+    github_token_missing:"توکن GitHub در تنظیمات Worker پیدا نشد.",github_repo_error:"Worker به مخزن GitHub دسترسی ندارد؛ مجوز توکن و نام مخزن را بررسی کن.",github_upload_failed:"GitHub آپلود را رد کرد؛ توکن باید دسترسی Contents با مجوز Read and write به مخزن داشته باشد.",invalid_image:"فایل عکس معتبر نیست یا حجم آن برای آپلود زیاد است. یک عکس JPG یا PNG کوچک‌تر انتخاب کن."
+  };
+  return messages[code]||("خطای نامشخص سرور: "+(code||"بدون کد خطا"));
 }
 function showDashboard(phone){
   $("login-card").style.display="none";
@@ -195,12 +210,42 @@ let productCache=[];
 async function loadProducts(){const list=$("products-list");list.innerHTML='<div class="loading">در حال دریافت محصولات...</div>';try{const r=await api("/manager/products",{},"GET");productCache=r.products||[];list.innerHTML=productCache.length?productCache.map(renderProduct).join(""):'<div class="empty">محصولی ثبت نشده است.</div>';list.querySelectorAll(".edit-product").forEach(b=>b.addEventListener("click",()=>editProduct(Number(b.dataset.id))));list.querySelectorAll(".del").forEach(b=>b.addEventListener("click",()=>deleteProduct(Number(b.dataset.id))))}catch(e){list.innerHTML=`<div class="empty">${safeText(e.message)}</div>`}}
 function editProduct(id){const p=productCache.find(x=>Number(x.id)===id);if(!p)return;$("product-id").value=p.id;$("product-name").value=p.name||"";$("product-category").value=p.category||"🍔 برگرها";$("product-description").value=p.description||"";$("product-contents").value=p.contents||"";$("product-price").value=p.price||0;const a=Array.isArray(p.prices)?p.prices:[];["price-small","price-medium","price-large","price-half"].forEach((id,i)=>$(id).value=a[i]||0);$("product-sort").value=p.sort_order||0;$("product-active").checked=Number(p.active)===1;$("image-preview").src=p.image_url||"";$("image-preview").style.display=p.image_url?"block":"none";$("form-title").textContent="ویرایش محصول: "+p.name;$("product-form").scrollIntoView({behavior:"smooth",block:"start"});togglePizzaFields()}
 async function deleteProduct(id){if(!confirm("این محصول برای همیشه حذف شود؟"))return;try{await api("/manager/products/delete",{id});toast("محصول حذف شد.");await loadProducts()}catch(e){toast(e.message)}}
-function readFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file)})}
+function readFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error("خواندن عکس از حافظه گوشی ناموفق بود."));reader.readAsDataURL(file)})}
 $("product-category").addEventListener("change",togglePizzaFields);
-$("product-image").addEventListener("change",async()=>{const f=$("product-image").files[0];if(!f)return;if(f.size>4*1024*1024){toast("حجم عکس باید کمتر از ۴ مگابایت باشد.");$("product-image").value="";return}const data=await readFile(f);$("image-preview").src=data;$("image-preview").style.display="block"});
+$("product-image").addEventListener("change",async()=>{
+  const f=$("product-image").files[0];if(!f)return;
+  if(!["image/jpeg","image/png","image/webp","image/gif"].includes(f.type)){toast("فرمت عکس باید JPG، PNG یا WEBP باشد.");$("product-image").value="";return}
+  if(f.size>4*1024*1024){toast("حجم عکس باید کمتر از ۴ مگابایت باشد.");$("product-image").value="";return}
+  try{const data=await readFile(f);$("image-preview").src=data;$("image-preview").style.display="block"}
+  catch(err){toast(err.message);$("product-image").value=""}
+});
 $("reset-product").addEventListener("click",resetProductForm);
 $("refresh-products").addEventListener("click",loadProducts);
-$("product-form").addEventListener("submit",async e=>{e.preventDefault();const button=$("save-product");button.disabled=true;button.textContent="در حال ذخیره...";try{let imageUrl=$("image-preview").src.startsWith("data:")?"":( $("image-preview").src||"");let imagePath="";const file=$("product-image").files[0];if(file){const dataUrl=await readFile(file);const up=await api("/manager/products/image",{filename:file.name,data_url:dataUrl});imageUrl=up.image_url;imagePath=up.image_path}else{const old=productCache.find(p=>Number(p.id)===Number($("product-id").value));imagePath=old?.image_path||""}const pizza=$("product-category").value.includes("پیتزا");const payload={id:Number($("product-id").value)||0,name:$("product-name").value.trim(),category:$("product-category").value,description:$("product-description").value,contents:$("product-contents").value,price:pizza?Number($("price-small").value)||0:Number($("product-price").value)||0,prices:pizza?["price-small","price-medium","price-large","price-half"].map(id=>Number($(id).value)||0):null,image_url:imageUrl,image_path:imagePath,active:$("product-active").checked?1:0,sort_order:Number($("product-sort").value)||0};await api("/manager/products/save",payload);toast("محصول با موفقیت ذخیره شد.");resetProductForm();await loadProducts()}catch(err){toast(err.message)}finally{button.disabled=false;button.textContent="ذخیره محصول"}});
+$("product-form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const button=$("save-product");button.disabled=true;button.textContent="در حال ذخیره...";
+  try{
+    let imageUrl=$("image-preview").src.startsWith("data:")?"":($("image-preview").src||"");
+    let imagePath="";
+    const file=$("product-image").files[0];
+    if(file){
+      toast("عکس در حال آپلود در GitHub است؛ لطفاً صفحه را نبند.");
+      const dataUrl=await readFile(file);
+      const up=await api("/manager/products/image",{filename:file.name,data_url:dataUrl});
+      if(!up.image_url||!up.image_path)throw new Error("GitHub پاسخ کامل برای عکس برنگرداند. دوباره تلاش کن.");
+      imageUrl=up.image_url;imagePath=up.image_path;
+    }else{
+      const old=productCache.find(p=>Number(p.id)===Number($("product-id").value));
+      imagePath=old?.image_path||"";
+    }
+    const pizza=$("product-category").value.includes("پیتزا");
+    const payload={id:Number($("product-id").value)||0,name:$("product-name").value.trim(),category:$("product-category").value,description:$("product-description").value,contents:$("product-contents").value,price:pizza?Number($("price-small").value)||0:Number($("product-price").value)||0,prices:pizza?["price-small","price-medium","price-large","price-half"].map(id=>Number($(id).value)||0):null,image_url:imageUrl,image_path:imagePath,active:$("product-active").checked?1:0,sort_order:Number($("product-sort").value)||0};
+    await api("/manager/products/save",payload);
+    toast(file?"محصول و عکس با موفقیت ذخیره شدند.":"محصول با موفقیت ذخیره شد.");
+    resetProductForm();await loadProducts();
+  }catch(err){toast(err.message||"ذخیره محصول ناموفق بود.")}
+  finally{button.disabled=false;button.textContent="ذخیره محصول"}
+});
 document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab));if(b.dataset.tab==="orders-panel")loadOrders();else loadProducts()}));
 async function logout(){
   try{await api("/manager/auth/logout",{})}catch{}
